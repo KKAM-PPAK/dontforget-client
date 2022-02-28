@@ -1,6 +1,8 @@
 node_modules/
 .expo/
 dist/
+.env
+google-services.json
 npm-debug.*
 .env
 *.jks
