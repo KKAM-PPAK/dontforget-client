@@ -1,11 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Calendar } from "react-native-calendars";
+import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import CreateButton from "../components/Button/CreateButton";
+import MyCalendar from "../components/Calendar/MyCalendar";
 
 export default function CalendarScreen() {
   return (
     <View style={styles.screen}>
-      <Calendar style={styles.calendar} />
+      <MyCalendar />
+      <CreateButton />
     </View>
   );
 }
@@ -13,10 +15,5 @@ export default function CalendarScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  calendar: {
-    justifyContent: "center",
   },
 });

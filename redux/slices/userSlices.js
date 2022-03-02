@@ -11,14 +11,16 @@ export const userSignIn = createAsyncThunk(
   async (payload, { rejectWithValue, getState, dispatch }) => {
     try {
       await AsyncStorage.clear();
-      const { data } = await axios.post(`${BASE_URL}/auth/signIn`, {
-        idToken: payload,
+      const { data } = await axios({
+        method: "post",
+        url: `${BASE_URL}/auth/signIn`,
+        data: { idToken: payload },
       });
 
       await AsyncStorage.setItem("accessToken", data.accessToken);
       return data;
     } catch (error) {
-      return rejectWithValue(error.respose.data);
+      return rejectWithValue(error.response.data);
     }
   },
 );
@@ -28,7 +30,9 @@ export const fetchUserInfo = createAsyncThunk(
   async (payload, { rejectWithValue, getState, dispatch }) => {
     try {
       const headers = await getAccessToken();
-      const { data } = await axios.get(`${BASE_URL}/auth/user`, {
+      const { data } = await axios({
+        method: "get",
+        url: `${BASE_URL}/auth/user`,
         headers,
       });
 
@@ -54,14 +58,12 @@ const userSlices = createSlice({
       state.name = name;
       state.uid = uid;
       state.email = email;
-      state.loading = false;
     },
     [fetchUserInfo.fulfilled]: (state, action) => {
       const { name, uid, email } = action.payload;
       state.name = name;
       state.uid = uid;
       state.email = email;
-      state.loading = false;
     },
   },
 });

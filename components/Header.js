@@ -1,10 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import COLORS from "../commons/constants/COLORS";
 
-export default function Header({ title }) {
+export default function Header() {
   return (
     <View style={styles.header}>
-      <Text style={styles.headerTitle}>{title}</Text>
+      <Text style={styles.headerTitle}>Header</Text>
     </View>
   );
 }
@@ -14,12 +15,13 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 90,
     paddingTop: 36,
-    backgroundColor: "#f7287b",
+    backgroundColor: COLORS.ivory,
     alignItems: "center",
     justifyContent: "center",
   },
   headerTitle: {
     color: "black",
     fontSize: 18,
+    fontFamily: "noto-regular",
   },
 });

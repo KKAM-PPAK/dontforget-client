@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
-import MainTabNavigator from "./MainTabNavigator";
 import AuthScreen from "../screens/AuthScreen";
 import { fetchUserInfo } from "../redux/slices/userSlices";
+import MainNavigator from "./MainNavigator";
 
 export default function AppNavigator() {
   const dispatch = useDispatch();
@@ -11,11 +11,11 @@ export default function AppNavigator() {
 
   useEffect(() => {
     dispatch(fetchUserInfo());
-  }, []);
+  }, [user]);
 
   return (
     <NavigationContainer>
-      {user.email ? <MainTabNavigator /> : <AuthScreen />}
+      {user.email ? <MainNavigator /> : <AuthScreen />}
     </NavigationContainer>
   );
 }
