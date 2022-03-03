@@ -9,12 +9,95 @@ export const createTask = createAsyncThunk(
   "post/task/new",
   async (payload, { rejectWithValue, getState, dispatch }) => {
     try {
-      console.log("%%%%%%payload%%%%%%", payload);
       const headers = await getAccessToken();
       const { data } = await axios({
         method: "post",
         url: `${BASE_URL}/task/new`,
         data: { task: payload },
+        headers,
+      });
+      dispatch(getUserTasks());
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const updateTask = createAsyncThunk(
+  "put/task/:taskId",
+  async (payload, { rejectWithValue, getState, dispatch }) => {
+    try {
+      const headers = await getAccessToken();
+      const { taskId, title } = payload;
+      const { data } = await axios({
+        method: "put",
+        url: `${BASE_URL}/task/${taskId}`,
+        data: { task: title },
+        headers,
+      });
+
+      dispatch(getUserTasks());
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const deleteTask = createAsyncThunk(
+  "delete/task/:taskId",
+  async (payload, { rejectWithValue, getState, dispatch }) => {
+    try {
+      const headers = await getAccessToken();
+      const taskId = payload;
+      const { data } = await axios({
+        method: "delete",
+        url: `${BASE_URL}/task/${taskId}`,
+        headers,
+      });
+      dispatch(getUserTasks());
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const createMemo = createAsyncThunk(
+  "post/task/:task_id/new",
+  async (payload, { rejectWithValue, getState, dispatch }) => {
+    try {
+      const { memo, task } = payload;
+      const headers = await getAccessToken();
+      const { data } = await axios({
+        method: "post",
+        url: `${BASE_URL}/task/${task._id}/new`,
+        data: { memo },
+        headers,
+      });
+      dispatch(getUserTasks());
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const updateMemo = createAsyncThunk(
+  "put/task/:taskId/:memoId",
+  async (payload, { rejectWithValue, getState, dispatch }) => {
+    try {
+      const { memoInfo, memoId, taskId } = payload;
+      const headers = await getAccessToken();
+      const { data } = await axios({
+        method: "put",
+        url: `${BASE_URL}/task/${taskId}/${memoId}`,
+        data: { memoInfo },
         headers,
       });
       dispatch(getUserTasks());
@@ -43,6 +126,27 @@ export const getUserTasks = createAsyncThunk(
     }
   },
 );
+
+export const removeMemo = createAsyncThunk(
+  "delete/task/:taskId/:memoId",
+  async (payload, { rejectWithValue, getState, dispatch }) => {
+    try {
+      const headers = await getAccessToken();
+      const { memoId, taskId } = payload;
+      const { data } = await axios({
+        method: "delete",
+        url: `${BASE_URL}/task/${taskId}/${memoId}`,
+        headers,
+      });
+      dispatch(getUserTasks());
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
 const taskSlices = createSlice({
   name: "task",
   initialState: {
@@ -54,6 +158,7 @@ const taskSlices = createSlice({
     [getUserTasks.fulfilled]: (state, action) => {
       state.taskList = action.payload;
     },
+    [createMemo.fulfilled]: (state, action) => {},
   },
 });
 

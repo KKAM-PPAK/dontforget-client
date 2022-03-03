@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Text, View } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import dayjs from "dayjs";
@@ -6,7 +6,12 @@ import dayjs from "dayjs";
 export default function ScheduleDate({ date, setDate }) {
   const [mode, setMode] = useState("date");
   const [showPicker, setShowPicker] = useState(false);
-  const [result, setResult] = useState("예약 없음");
+  const [result, setResult] = useState();
+
+  useEffect(() => {
+    const result = dayjs(date).format("YYYY.MM.DD HH:mm");
+    setResult(result);
+  }, []);
 
   function showMode(currentMode) {
     setShowPicker(true);

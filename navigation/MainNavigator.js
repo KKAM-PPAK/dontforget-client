@@ -10,6 +10,9 @@ import TaskListScreen from "../screens/TaskListScreen";
 import TimelineScreen from "../screens/TimelineScreen";
 import ModifyTaskScreen from "../screens/ModifyTaskScreen";
 import CreateTaskScreen from "../screens/CreateTaskScreen";
+import MemoDetailScreen from "../screens/MemoDetailScreen";
+import TaskDetailScreen from "../screens/TaskDetailScreen";
+import ModifyMemoScreen from "../screens/ModifyMemoScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -79,10 +82,34 @@ export default function MainNavigator() {
         }}
       />
       <Stack.Screen
+        name="TaskDetail"
+        component={TaskDetailScreen}
+        options={{
+          headerTitle: "Task Detail",
+          headerTitleAlign: "center",
+        }}
+      />
+      <Stack.Screen
         name="ModifyTask"
         component={ModifyTaskScreen}
         options={{
           headerTitle: "Modify Task",
+          headerTitleAlign: "center",
+        }}
+      />
+      <Stack.Screen
+        name="ModifyMemo"
+        component={ModifyMemoScreen}
+        options={{
+          headerTitle: "Modify Memo",
+          headerTitleAlign: "center",
+        }}
+      />
+      <Stack.Screen
+        name="MemoDetail"
+        component={MemoDetailScreen}
+        options={{
+          headerTitle: "Memo Detail",
           headerTitleAlign: "center",
         }}
       />

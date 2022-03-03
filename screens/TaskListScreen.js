@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { View, StyleSheet, FlatList } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserTasks } from "../redux/slices/taskSlices";
-import TaskList from "../components/Task/TaskList";
 
-import CreateButton from "../components/Button/CreateButton";
+import Button from "../components/Button/Button";
+import Task from "../components/Task/Task";
 
-export default function TaskListScreen() {
+export default function TaskListScreen({ navigation }) {
   const dispatch = useDispatch();
   const taskList = useSelector((state) => state.task.taskList);
 
@@ -19,9 +19,9 @@ export default function TaskListScreen() {
       <FlatList
         data={taskList}
         keyExtractor={(item) => String(item._id)}
-        renderItem={(itemData) => <TaskList task={itemData.item} />}
+        renderItem={(itemData) => <Task task={itemData.item} />}
       />
-      <CreateButton />
+      <Button title="create" onPress={() => navigation.navigate("NewTask")} />
     </View>
   );
 }

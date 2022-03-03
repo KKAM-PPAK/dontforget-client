@@ -13,7 +13,7 @@ import logo from "../assets/logo_big.png";
 
 WebBrowser.maybeCompleteAuthSession();
 
-export default function AuthScreen({ navigation }) {
+export default function AuthScreen() {
   const dispatch = useDispatch();
 
   const [request, response, promptAsync] = Google.useAuthRequest({

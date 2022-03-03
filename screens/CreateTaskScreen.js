@@ -9,13 +9,12 @@ import MemoInput from "../components/Input/MemoInput";
 export default function CreateTaskScreen({ navigation }) {
   const dispatch = useDispatch();
   const [dueDate, setdueDate] = useState(new Date());
-  const [notiTime, setNotiTime] = useState(dueDate);
   const [taskTitle, setTaskTitle] = useState("");
   const [newMemo, setNewMemo] = useState("");
 
   async function saveTask() {
-    if (notiTime > dueDate) {
-      Alert.alert("Error!", "예정일보다 알림일이 이전이어야 합니다.");
+    if (dueDate < new Date()) {
+      Alert.alert("Error!", "오늘 이후로 알림일을 설정해주세요.");
 
       return;
     }
@@ -40,13 +39,12 @@ export default function CreateTaskScreen({ navigation }) {
       },
     ]);
 
-    function sendTask() {
+    async function sendTask() {
       const newTask = {
         title: taskTitle,
         memo: {
           description: newMemo,
           due_date: dueDate,
-          noti_time: notiTime,
         },
       };
 
@@ -62,8 +60,6 @@ export default function CreateTaskScreen({ navigation }) {
       <MemoInput memo={newMemo} onChangeText={setNewMemo} />
       <Text>예정일 설정</Text>
       <ScheduleDate date={dueDate} setDate={setdueDate} />
-      <Text>알림일 설정</Text>
-      <ScheduleDate date={notiTime} setDate={setNotiTime} />
       <Button title="save" onPress={saveTask} />
     </View>
   );
