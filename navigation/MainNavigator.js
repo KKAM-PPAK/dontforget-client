@@ -25,8 +25,8 @@ function TabNavigator() {
           backgroundColor: COLORS.ivory,
           height: "8%",
         },
-        tabBarActiveTintColor: COLORS.white,
-        tabBarActiveBackgroundColor: COLORS.green,
+        tabBarActiveTintColor: "black",
+        tabBarActiveBackgroundColor: COLORS.orange,
       }}
     >
       <Tab.Screen

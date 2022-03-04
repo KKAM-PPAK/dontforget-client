@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Provider } from "react-redux";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import COLORS from "./commons/constants/COLORS";
 import store from "./redux/store/store";
 
 import AppNavigator from "./navigation/AppNavigator";
@@ -27,8 +29,11 @@ export default function App() {
   }
 
   return (
-    <Provider store={store}>
-      <AppNavigator />
-    </Provider>
+    <SafeAreaProvider>
+      <StatusBar backgroundColor={COLORS.ivory} />
+      <Provider store={store}>
+        <AppNavigator />
+      </Provider>
+    </SafeAreaProvider>
   );
 }

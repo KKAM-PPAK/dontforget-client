@@ -151,12 +151,14 @@ const taskSlices = createSlice({
   name: "task",
   initialState: {
     taskList: [],
+    memoList: [],
   },
   reducers: {},
   extraReducers: {
     [createTask.fulfilled]: (state, action) => {},
     [getUserTasks.fulfilled]: (state, action) => {
       state.taskList = action.payload;
+      state.memoList = action.payload.map((task) => task.memo).flat();
     },
     [createMemo.fulfilled]: (state, action) => {},
   },

@@ -1,22 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View, StyleSheet, FlatList } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserTasks } from "../redux/slices/taskSlices";
+import { useSelector } from "react-redux";
 
 import Button from "../components/Button/Button";
 import Task from "../components/Task/Task";
 
 export default function TaskListScreen({ navigation }) {
-  const dispatch = useDispatch();
   const taskList = useSelector((state) => state.task.taskList);
-
-  useEffect(() => {
-    dispatch(getUserTasks());
-  }, []);
 
   return (
     <View style={styles.screen}>
       <FlatList
+        style={{ width: "100%" }}
+        contentContainerStyle={styles.taskList}
         data={taskList}
         keyExtractor={(item) => String(item._id)}
         renderItem={(itemData) => <Task task={itemData.item} />}
@@ -31,5 +27,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  taskList: {
+    justifyContent: "space-around",
   },
 });

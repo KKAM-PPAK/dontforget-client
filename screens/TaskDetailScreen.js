@@ -35,7 +35,7 @@ export default function TaskDetailScreen({ route }) {
       <FlatList
         data={task.memo}
         keyExtractor={(item) => String(item._id)}
-        renderItem={(itemData) => <Memo memo={itemData} task={task} />}
+        renderItem={(itemData) => <Memo memo={itemData.item} task={task} />}
       />
       <View>
         <Button title="메모 추가" onPress={() => setShowAddMemo(true)} />

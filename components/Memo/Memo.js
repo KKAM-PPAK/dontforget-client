@@ -1,28 +1,35 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Button,
-  Alert,
-} from "react-native";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, Alert } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import { removeMemo } from "../../redux/slices/taskSlices";
+import TouchableMemo from "./TouchableMemo";
 
 export default function Memo({ memo, task }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const { _id, create_at, description, due_date } = memo.item;
+  const taskList = useSelector((state) => state.task.taskList);
+  const [targetTask, setTargetTask] = useState("");
+
+  useEffect(() => {
+    function findTask(memo, taskList) {
+      const targetTask = taskList.filter((task) =>
+        task.memo.map((item) => item._id === memo._id),
+      );
+
+      setTargetTask(targetTask);
+    }
+
+    findTask(memo, taskList);
+  }, [memo]);
 
   function handleDeleteMemoButton() {
     Alert.alert("깜빡!", "메모를 삭제하시겠습니까?", [
       {
         text: "네",
         onPress: () => {
-          const memoId = memo.item._id;
-          const taskId = task._id;
+          const memoId = memo._id;
+          const taskId = targetTask._id || task._id;
 
           dispatch(removeMemo({ memoId, taskId }));
           navigation.navigate("Tasks");
@@ -38,17 +45,11 @@ export default function Memo({ memo, task }) {
   return (
     <View style={styles.screen}>
       <View style={styles.memoInfo}>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("MemoDetail", {
-              memo: memo.item,
-              taskId: task._id,
-            })
-          }
-        >
-          <Text>{description}</Text>
-          <Button title="delete" onPress={handleDeleteMemoButton} />
-        </TouchableOpacity>
+        <TouchableMemo
+          memo={memo}
+          task={task || targetTask}
+          deleteButton={handleDeleteMemoButton}
+        />
       </View>
     </View>
   );

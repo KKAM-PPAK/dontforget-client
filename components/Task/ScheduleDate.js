@@ -9,7 +9,7 @@ export default function ScheduleDate({ date, setDate }) {
   const [result, setResult] = useState();
 
   useEffect(() => {
-    const result = dayjs(date).format("YYYY.MM.DD HH:mm");
+    const result = dayjs(date).add(9, "hour").format("YYYY.MM.DD HH:mm");
     setResult(result);
   }, []);
 
@@ -23,17 +23,20 @@ export default function ScheduleDate({ date, setDate }) {
     setShowPicker(false);
     setDate(currentDate);
 
-    setResult(dayjs(currentDate).format("YYYY.MM.DD HH:mm"));
+    setResult(dayjs(currentDate).add(9, "hour").format("YYYY.MM.DD HH:mm"));
   }
 
   return (
     <View>
-      <Text>{result}</Text>
+      <Text>예정일 : {result && result.split(" ")[0]}</Text>
       <Button title="날짜 설정" onPress={() => showMode("date")} />
+      <Text>예정 시간 : {result && result.split(" ")[1]}</Text>
       <Button title="시간 설정" onPress={() => showMode("time")} />
       {showPicker && (
         <DateTimePicker
           testID="dateTimePicker"
+          timeZoneOffsetInSeconds={32400}
+          timeZoneOffsetInMinutes={540}
           value={date}
           mode={mode}
           is24Hour

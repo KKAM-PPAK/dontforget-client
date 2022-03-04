@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Button, Image } from "react-native";
+import React, { useEffect } from "react";
+import { View, StyleSheet, Image } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import {
@@ -9,7 +9,9 @@ import {
 } from "@env";
 import { useDispatch } from "react-redux";
 import { userSignIn } from "../redux/slices/userSlices";
-import logo from "../assets/logo_big.png";
+import logo from "../assets/logo_name.png";
+import COLORS from "../commons/constants/COLORS";
+import Button from "../components/Button/Button";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -32,14 +34,17 @@ export default function AuthScreen() {
 
   return (
     <View style={styles.screen}>
-      <Text style={styles.text}>Login 하세요!</Text>
-      <Image source={logo} style={styles.logo} />
-      <Button
-        style={styles.googleLogin}
-        title="Login via Google"
-        disabled={!request}
-        onPress={() => promptAsync()}
-      />
+      <View style={styles.logo}>
+        <Image source={logo} />
+      </View>
+      <View>
+        <Button
+          title="Google Login"
+          buttonStyle={styles.button}
+          textStyle={styles.buttonText}
+          onPress={() => promptAsync()}
+        />
+      </View>
     </View>
   );
 }
@@ -47,18 +52,24 @@ export default function AuthScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    backgroundColor: COLORS.ivory,
     justifyContent: "center",
     alignItems: "center",
-    fontFamily: "noto-regular",
-  },
-  text: {
-    flex: 0.1,
-  },
-  googleLogin: {
-    flex: 0.7,
   },
   logo: {
-    flex: 0.2,
-    width: "50%",
+    width: 200,
+    height: 200,
+  },
+  button: {
+    backgroundColor: COLORS.orange,
+    alignItems: "center",
+    padding: 15,
+    paddingHorizontal: 30,
+    borderRadius: 15,
+    elevation: 8,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 20,
   },
 });

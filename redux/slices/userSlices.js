@@ -30,6 +30,7 @@ export const fetchUserInfo = createAsyncThunk(
   async (payload, { rejectWithValue, getState, dispatch }) => {
     try {
       const headers = await getAccessToken();
+
       const { data } = await axios({
         method: "get",
         url: `${BASE_URL}/auth/user`,
