@@ -1,3 +1,5 @@
+import { Picker } from "@react-native-picker/picker";
+import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { Alert, Text, TextInput, View } from "react-native";
 import { useDispatch } from "react-redux";
@@ -11,6 +13,7 @@ export default function ModifyMemoScreen({ navigation, route }) {
   const dispatch = useDispatch();
   const [dueDate, setdueDate] = useState(new Date(memo.due_date));
   const [currentMemo, setCurrentMemo] = useState(memo.description);
+  const [selectedOption, setSelectedOption] = useState(memo.repeat);
 
   async function handleAddMemoButton() {
     if (new Date(dueDate) < new Date()) {
@@ -37,7 +40,8 @@ export default function ModifyMemoScreen({ navigation, route }) {
       const memoInfo = {
         memo: {
           description: currentMemo,
-          due_date: dueDate,
+          due_date: dayjs(dueDate).second(0).millisecond(0),
+          repeat: selectedOption,
         },
       };
       dispatch(updateMemo({ memoInfo, memoId, taskId }));
@@ -52,6 +56,15 @@ export default function ModifyMemoScreen({ navigation, route }) {
       ) : (
         <Text>오늘 이전의 작업은 예정일을 수정할 수 없습니다.</Text>
       )}
+      <Picker
+        selectedValue={selectedOption}
+        onValueChange={(itemValue, itemIndex) => setSelectedOption(itemValue)}
+      >
+        <Picker.Item label="안 함" value="0" />
+        <Picker.Item label="매 일" value="1" />
+        <Picker.Item label="매 주" value="2" />
+        <Picker.Item label="매 년" value="3" />
+      </Picker>
       <Button title="add" onPress={handleAddMemoButton} />
     </View>
   );

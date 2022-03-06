@@ -1,9 +1,11 @@
 const COLORS = {
   white: "#FFFFFF",
   ivory: "#EAE6CD",
-  navy: "#3A3F58",
+  pink: "#FCBDB2",
+  blue: "#73AFBA",
+  navy: "#1C2E3D",
   green: "#0E3746",
-  orange: "#EE6A59",
+  orange: "#E8594E",
   red: "#BE2623",
 };
 

@@ -9,7 +9,7 @@ export default function ScheduleDate({ date, setDate }) {
   const [result, setResult] = useState();
 
   useEffect(() => {
-    const result = dayjs(date).add(9, "hour").format("YYYY.MM.DD HH:mm");
+    const result = dayjs(date).format("YYYY.MM.DD HH:mm");
     setResult(result);
   }, []);
 
@@ -23,7 +23,7 @@ export default function ScheduleDate({ date, setDate }) {
     setShowPicker(false);
     setDate(currentDate);
 
-    setResult(dayjs(currentDate).add(9, "hour").format("YYYY.MM.DD HH:mm"));
+    setResult(dayjs(currentDate).format("YYYY.MM.DD HH:mm"));
   }
 
   return (

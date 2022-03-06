@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 import dayjs from "dayjs";
+import REPEATTYPE from "../../commons/constants/REPEATTYPE";
 
 export default function MemoInfo({ memo }) {
   return (
@@ -8,8 +9,9 @@ export default function MemoInfo({ memo }) {
       <Text>제목: {memo.description}</Text>
       <Text>
         예정일:
-        {dayjs(memo.due_date).add(9, "hour").format("YYYY-MM-DD HH:mm")}
+        {dayjs(memo.due_date).format("YYYY-MM-DD HH:mm")}
       </Text>
+      <Text>반복: {REPEATTYPE[memo.repeat]}</Text>
     </View>
   );
 }

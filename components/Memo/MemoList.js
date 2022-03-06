@@ -12,13 +12,14 @@ export default function MemoList({ date }) {
     const targetMemoList = memoList
       .filter(
         (memo) =>
-          dayjs(memo.due_date).add("9", "hour").format("YYYY-MM-DD") ===
+          dayjs(memo.due_date).format("YYYY-MM-DD") ===
           dayjs(date.timestamp).format("YYYY-MM-DD"),
       )
       .sort((a, b) => b.due_date - a.due_date);
 
     setSameDateMemoList(targetMemoList);
-  }, [date]);
+  }, [date, memoList]);
+
   return (
     <View>
       <FlatList

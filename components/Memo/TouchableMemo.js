@@ -1,9 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
-import Button from "../Button/Button";
 
-export default function TouchableMemo({ memo, task, deleteButton }) {
+export default function TouchableMemo({ memo, task }) {
   const navigation = useNavigation();
 
   return (
@@ -16,7 +15,6 @@ export default function TouchableMemo({ memo, task, deleteButton }) {
       }
     >
       <Text>{memo.description}</Text>
-      <Button title="delete" onPress={deleteButton} />
     </TouchableOpacity>
   );
 }

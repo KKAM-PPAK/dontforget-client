@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import COLORS from "../commons/constants/COLORS";
 import Button from "../components/Button/Button";
@@ -15,7 +16,7 @@ export default function CalendarScreen({ navigation }) {
   const [scheduledDate, setScheduledDate] = useState([]);
   const taskList = useSelector((state) => state.task.taskList);
 
-  useEffect(() => {
+  useEffect(async () => {
     dispatch(getUserTasks());
   }, []);
 
@@ -35,7 +36,7 @@ export default function CalendarScreen({ navigation }) {
   }, [taskList]);
 
   return (
-    <View style={styles.screen}>
+    <SafeAreaView style={styles.screen}>
       <View style={styles.calendar}>
         <MyCalendar
           onDatePress={setOnDateClick}
@@ -43,7 +44,11 @@ export default function CalendarScreen({ navigation }) {
           setClickedDate={setClickedDate}
         />
       </View>
-      {onDateClick && <MemoList date={clickedDate} />}
+      {onDateClick && (
+        <View style={styles.memoListContainer}>
+          <MemoList date={clickedDate} />
+        </View>
+      )}
       <View style={styles.buttonContainer}>
         <Button
           title="+"
@@ -52,17 +57,31 @@ export default function CalendarScreen({ navigation }) {
           onPress={() => navigation.navigate("NewTask")}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: COLORS.ivory,
+    justifyContent: "center",
+    backgroundColor: COLORS.white,
   },
   calendar: {
-    backgroundColor: "blue",
+    flex: 0.5,
+    backgroundColor: "yellow",
+    elevation: 5,
+  },
+  memoListContainer: {
+    flex: 0.5,
+    borderRadius: 15,
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "center",
+    marginHorizontal: 20,
+    borderWidth: 1,
+    borderColor: "white",
+    backgroundColor: COLORS.navy,
   },
   buttonContainer: {
     position: "absolute",

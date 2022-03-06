@@ -11,7 +11,7 @@ export default function MyCalendar({
   const [markedDate, setMarkedDate] = useState({});
   const taskExist = {
     key: "taskExist",
-    color: COLORS.red,
+    color: COLORS.orange,
     selectedDotColor: "blue",
   };
 
@@ -38,12 +38,19 @@ export default function MyCalendar({
       markingType="multi-dot"
       markedDates={markedDate}
       theme={{
+        todayTextColor: COLORS.red,
+        calendarBackground: COLORS.white,
+        textSectionTitleColor: "black",
+        monthTextColor: COLORS.navy,
+        textDayFontSize: 16,
+        textDayFontWeight: "400",
+        selectedDayBackgroundColor: COLORS.blue,
         "stylesheet.calendar.header": {
           dayTextAtIndex0: {
             color: COLORS.red,
           },
           dayTextAtIndex6: {
-            color: COLORS.green,
+            color: COLORS.blue,
           },
         },
       }}

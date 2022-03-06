@@ -44,6 +44,7 @@
     "react/jsx-no-bind": 0,
     "react/jsx-pascal-case": 0,
     "no-underscore-dangle": 0,
-    "no-restricted-syntax": 0
+    "no-restricted-syntax": 0,
+    "import/no-import-module-exports": 0
   }
 }

@@ -25,6 +25,10 @@ function TabNavigator() {
           backgroundColor: COLORS.ivory,
           height: "8%",
         },
+        tabBarShowLabel: false,
+        headerStyle: {
+          backgroundColor: COLORS.ivory,
+        },
         tabBarActiveTintColor: "black",
         tabBarActiveBackgroundColor: COLORS.orange,
       }}
@@ -33,9 +37,12 @@ function TabNavigator() {
         name="Calendar"
         component={CalendarScreen}
         options={{
-          tabBarIcon: () => <Icon name="calendar" size={23} color="black" />,
+          tabBarIcon: () => (
+            <Icon name="calendar" size={23} color={COLORS.navy} />
+          ),
           headerTitle: "Calendar",
           headerTitleAlign: "center",
+          headerTintColor: COLORS.navy,
         }}
       />
       <Tab.Screen

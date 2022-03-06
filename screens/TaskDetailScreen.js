@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { Alert, FlatList, View } from "react-native";
+import { Alert, FlatList, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
 import Button from "../components/Button/Button";
 import Memo from "../components/Memo/Memo";
@@ -12,6 +12,7 @@ export default function TaskDetailScreen({ route }) {
   const dispatch = useDispatch();
   const { task } = route.params;
   const [showAddMemo, setShowAddMemo] = useState(false);
+  const latestMemo = task.memo[task.memo.length - 1];
 
   function handleDeleteTaskButton() {
     Alert.alert("깜빡", "태스크를 삭제하시겠습니까?", [
@@ -38,12 +39,16 @@ export default function TaskDetailScreen({ route }) {
         renderItem={(itemData) => <Memo memo={itemData.item} task={task} />}
       />
       <View>
-        <Button title="메모 추가" onPress={() => setShowAddMemo(true)} />
+        {new Date(latestMemo.due_date) < new Date() ? (
+          <Button title="메모 추가" onPress={() => setShowAddMemo(true)} />
+        ) : (
+          <Text>이전 메모의 일정이 끝나면 추가할 수 있습니다</Text>
+        )}
         <Button
           title="task 수정"
           onPress={() => navigation.navigate("ModifyTask", { task })}
         />
-        <Button title="delete" onPress={handleDeleteTaskButton} />
+        <Button title="task 삭제" onPress={handleDeleteTaskButton} />
       </View>
     </View>
   );

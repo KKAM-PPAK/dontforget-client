@@ -2,6 +2,10 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BASE_URL_ANDROID_SIMULATOR } from "@env";
 import getAccessToken from "../../commons/utils/getAccessToken";
+import {
+  cancelScheduledNotification,
+  triggerNotificationHandler,
+} from "../../commons/utils/noti";
 
 const BASE_URL = BASE_URL_ANDROID_SIMULATOR;
 
@@ -53,14 +57,14 @@ export const deleteTask = createAsyncThunk(
     try {
       const headers = await getAccessToken();
       const taskId = payload;
-      const { data } = await axios({
+      await axios({
         method: "delete",
         url: `${BASE_URL}/task/${taskId}`,
         headers,
       });
       dispatch(getUserTasks());
 
-      return data;
+      return payload;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -73,15 +77,16 @@ export const createMemo = createAsyncThunk(
     try {
       const { memo, task } = payload;
       const headers = await getAccessToken();
-      const { data } = await axios({
+      await axios({
         method: "post",
         url: `${BASE_URL}/task/${task._id}/new`,
         data: { memo },
         headers,
       });
+
       dispatch(getUserTasks());
 
-      return data;
+      return { memo, task };
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -94,15 +99,15 @@ export const updateMemo = createAsyncThunk(
     try {
       const { memoInfo, memoId, taskId } = payload;
       const headers = await getAccessToken();
-      const { data } = await axios({
+      await axios({
         method: "put",
         url: `${BASE_URL}/task/${taskId}/${memoId}`,
         data: { memoInfo },
         headers,
       });
-      dispatch(getUserTasks());
 
-      return data;
+      dispatch(getUserTasks());
+      return payload;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -133,14 +138,14 @@ export const removeMemo = createAsyncThunk(
     try {
       const headers = await getAccessToken();
       const { memoId, taskId } = payload;
-      const { data } = await axios({
+      await axios({
         method: "delete",
         url: `${BASE_URL}/task/${taskId}/${memoId}`,
         headers,
       });
       dispatch(getUserTasks());
 
-      return data;
+      return taskId;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -155,13 +160,58 @@ const taskSlices = createSlice({
   },
   reducers: {},
   extraReducers: {
-    [createTask.fulfilled]: (state, action) => {},
+    [createTask.fulfilled]: (state, action) => {
+      const newTask = action.payload;
+      const option = {
+        identifier: newTask._id,
+        body: newTask.memo[0].description,
+        date: newTask.memo[0].due_date,
+        repeatType: newTask.memo[0].repeat,
+        channelId: "task",
+      };
+
+      triggerNotificationHandler(option);
+    },
     [getUserTasks.fulfilled]: (state, action) => {
       state.taskList = action.payload;
       state.memoList = action.payload.map((task) => task.memo).flat();
     },
-    [createMemo.fulfilled]: (state, action) => {},
+    [createMemo.fulfilled]: (state, action) => {
+      const { memo, task } = action.payload;
+      const option = {
+        identifier: task._id,
+        body: memo.description,
+        date: memo.due_date,
+        repeatType: memo.repeat || "0",
+        channelId: "task",
+      };
+
+      triggerNotificationHandler(option);
+    },
+    [removeMemo.fulfilled]: (state, action) => {
+      const taskId = action.payload;
+
+      cancelScheduledNotification(taskId);
+    },
+    [updateMemo.fulfilled]: (state, action) => {
+      const { memoInfo, taskId } = action.payload;
+      const option = {
+        identifier: taskId,
+        body: memoInfo.memo.description,
+        date: memoInfo.memo.due_date,
+        repeatType: memoInfo.memo.repeat || "0",
+        channelId: "task",
+      };
+
+      triggerNotificationHandler(option);
+    },
+    [deleteTask.fulfilled]: (state, action) => {
+      const identifier = action.payload;
+
+      cancelScheduledNotification(identifier);
+    },
   },
 });
 
+export const { addNotification } = taskSlices.actions;
 export default taskSlices.reducer;
