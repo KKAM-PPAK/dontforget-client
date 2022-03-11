@@ -2,17 +2,19 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/FontAwesome";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import COLORS from "../commons/constants/COLORS";
-import CalendarScreen from "../screens/CalendarScreen";
-import TaskListScreen from "../screens/TaskListScreen";
-import TimelineScreen from "../screens/TimelineScreen";
-import ModifyTaskScreen from "../screens/ModifyTaskScreen";
-import CreateTaskScreen from "../screens/CreateTaskScreen";
-import MemoDetailScreen from "../screens/MemoDetailScreen";
-import TaskDetailScreen from "../screens/TaskDetailScreen";
-import ModifyMemoScreen from "../screens/ModifyMemoScreen";
+import CalendarScreen from "../screens/Calendar/CalendarScreen";
+import TaskListScreen from "../screens/Task/TaskListScreen";
+import TimelineScreen from "../screens/Timeline/TimelineScreen";
+import ModifyTaskScreen from "../screens/Task/ModifyTaskScreen";
+import CreateTaskScreen from "../screens/Task/CreateTaskScreen";
+import MemoDetailScreen from "../screens/Memo/MemoDetailScreen";
+import TaskDetailScreen from "../screens/Task/TaskDetailScreen";
+import ModifyMemoScreen from "../screens/Memo/ModifyMemoScreen";
+import OptionScreen from "../screens/Option/OptionScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -22,15 +24,14 @@ function TabNavigator() {
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: COLORS.ivory,
+          backgroundColor: COLORS.lightgray,
           height: "8%",
         },
-        tabBarShowLabel: false,
-        headerStyle: {
-          backgroundColor: COLORS.ivory,
-        },
+        tabBarHideOnKeyboard: true,
+        headerTitleAlign: "center",
+        headerShown: false,
         tabBarActiveTintColor: "black",
-        tabBarActiveBackgroundColor: COLORS.orange,
+        tabBarActiveBackgroundColor: COLORS.blue,
       }}
     >
       <Tab.Screen
@@ -40,17 +41,14 @@ function TabNavigator() {
           tabBarIcon: () => (
             <Icon name="calendar" size={23} color={COLORS.navy} />
           ),
-          headerTitle: "Calendar",
-          headerTitleAlign: "center",
-          headerTintColor: COLORS.navy,
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen
         name="Tasks"
         component={TaskListScreen}
         options={{
-          headerTitle: "Tasks",
-          headerTitleAlign: "center",
+          unmountOnBlur: true,
           tabBarIcon: () => <Icon name="tasks" size={23} color="black" />,
         }}
       />
@@ -58,8 +56,7 @@ function TabNavigator() {
         name="Timeline"
         component={TimelineScreen}
         options={{
-          headerTitle: "Timeline",
-          headerTitleAlign: "center",
+          unmountOnBlur: true,
           tabBarIcon: () => (
             <MaterialCommunityIcons
               name="chart-timeline-variant"
@@ -67,6 +64,14 @@ function TabNavigator() {
               color="black"
             />
           ),
+        }}
+      />
+      <Tab.Screen
+        name="option"
+        component={OptionScreen}
+        options={{
+          unmountOnBlur: true,
+          tabBarIcon: () => <Ionicons name="options" size={23} color="black" />,
         }}
       />
     </Tab.Navigator>
@@ -78,7 +83,7 @@ export default function MainNavigator() {
       <Stack.Screen
         name="Tab"
         component={TabNavigator}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, headerTitleAlign: "center" }}
       />
       <Stack.Screen
         name="NewTask"
@@ -88,38 +93,24 @@ export default function MainNavigator() {
           headerTitleAlign: "center",
         }}
       />
-      <Stack.Screen
-        name="TaskDetail"
-        component={TaskDetailScreen}
-        options={{
-          headerTitle: "Task Detail",
-          headerTitleAlign: "center",
-        }}
-      />
+      <Stack.Screen name="TaskDetail" component={TaskDetailScreen} />
       <Stack.Screen
         name="ModifyTask"
         component={ModifyTaskScreen}
         options={{
-          headerTitle: "Modify Task",
-          headerTitleAlign: "center",
+          presentation: "transparentModal",
+          headerShown: false,
         }}
       />
       <Stack.Screen
         name="ModifyMemo"
         component={ModifyMemoScreen}
         options={{
-          headerTitle: "Modify Memo",
-          headerTitleAlign: "center",
+          presentation: "modal",
+          headerShown: false,
         }}
       />
-      <Stack.Screen
-        name="MemoDetail"
-        component={MemoDetailScreen}
-        options={{
-          headerTitle: "Memo Detail",
-          headerTitleAlign: "center",
-        }}
-      />
+      <Stack.Screen name="Memo Detail" component={MemoDetailScreen} />
     </Stack.Navigator>
   );
 }

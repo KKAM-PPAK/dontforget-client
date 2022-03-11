@@ -1,10 +1,17 @@
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 
-export default function Button({ title, onPress, buttonStyle, textStyle }) {
+export default function Button({
+  icon,
+  title,
+  onPress,
+  buttonStyle,
+  textStyle,
+}) {
   return (
     <TouchableOpacity style={buttonStyle} onPress={onPress}>
-      <Text style={textStyle}>{title}</Text>
+      {icon || null}
+      {title && <Text style={textStyle}>{title}</Text>}
     </TouchableOpacity>
   );
 }

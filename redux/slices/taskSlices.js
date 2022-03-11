@@ -5,7 +5,7 @@ import getAccessToken from "../../commons/utils/getAccessToken";
 import {
   cancelScheduledNotification,
   triggerNotificationHandler,
-} from "../../commons/utils/noti";
+} from "../../commons/utils/localNotification";
 
 const BASE_URL = BASE_URL_ANDROID_SIMULATOR;
 
@@ -164,7 +164,7 @@ const taskSlices = createSlice({
       const newTask = action.payload;
       const option = {
         identifier: newTask._id,
-        body: newTask.memo[0].description,
+        body: newTask.memo[0].title,
         date: newTask.memo[0].due_date,
         repeatType: newTask.memo[0].repeat,
         channelId: "task",
@@ -180,7 +180,7 @@ const taskSlices = createSlice({
       const { memo, task } = action.payload;
       const option = {
         identifier: task._id,
-        body: memo.description,
+        body: memo.title,
         date: memo.due_date,
         repeatType: memo.repeat || "0",
         channelId: "task",
@@ -197,7 +197,7 @@ const taskSlices = createSlice({
       const { memoInfo, taskId } = action.payload;
       const option = {
         identifier: taskId,
-        body: memoInfo.memo.description,
+        body: memoInfo.memo.title,
         date: memoInfo.memo.due_date,
         repeatType: memoInfo.memo.repeat || "0",
         channelId: "task",
@@ -213,5 +213,4 @@ const taskSlices = createSlice({
   },
 });
 
-export const { addNotification } = taskSlices.actions;
 export default taskSlices.reducer;

@@ -10,13 +10,11 @@ export const userSignIn = createAsyncThunk(
   "post/user",
   async (payload, { rejectWithValue, getState, dispatch }) => {
     try {
-      await AsyncStorage.clear();
       const { data } = await axios({
         method: "post",
         url: `${BASE_URL}/auth/signIn`,
         data: { idToken: payload },
       });
-
       await AsyncStorage.setItem("accessToken", data.accessToken);
       return data;
     } catch (error) {
@@ -52,7 +50,13 @@ const userSlices = createSlice({
     uid: "",
     email: "",
   },
-  reducers: {},
+  reducers: {
+    initUserInfo: (state, action) => {
+      state.name = "";
+      state.uid = "";
+      state.email = "";
+    },
+  },
   extraReducers: {
     [userSignIn.fulfilled]: (state, action) => {
       const { name, uid, email } = action.payload;
@@ -69,4 +73,5 @@ const userSlices = createSlice({
   },
 });
 
+export const { initUserInfo } = userSlices.actions;
 export default userSlices.reducer;
