@@ -20,7 +20,6 @@ export const createTask = createAsyncThunk(
         data: { task: payload },
         headers,
       });
-      dispatch(getUserTasks());
 
       return data;
     } catch (error) {
@@ -42,9 +41,7 @@ export const updateTask = createAsyncThunk(
         headers,
       });
 
-      dispatch(getUserTasks());
-
-      return data;
+      return payload;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -62,7 +59,6 @@ export const deleteTask = createAsyncThunk(
         url: `${BASE_URL}/task/${taskId}`,
         headers,
       });
-      dispatch(getUserTasks());
 
       return payload;
     } catch (error) {
@@ -84,7 +80,7 @@ export const createMemo = createAsyncThunk(
         headers,
       });
 
-      dispatch(getUserTasks());
+      // dispatch(getUserTasks());
 
       return { memo, task };
     } catch (error) {
@@ -156,12 +152,12 @@ const taskSlices = createSlice({
   name: "task",
   initialState: {
     taskList: [],
-    memoList: [],
   },
   reducers: {},
   extraReducers: {
     [createTask.fulfilled]: (state, action) => {
       const newTask = action.payload;
+      state.taskList.push(newTask);
       const option = {
         identifier: newTask._id,
         body: newTask.memo[0].title,
@@ -172,12 +168,31 @@ const taskSlices = createSlice({
 
       triggerNotificationHandler(option);
     },
+    [updateTask.fulfilled]: (state, action) => {
+      const { taskId, title } = action.payload;
+      const targetTaskIndex = state.taskList.findIndex(
+        (task) => task._id === taskId,
+      );
+      state.taskList[targetTaskIndex].title = title;
+    },
+    [deleteTask.fulfilled]: (state, action) => {
+      const taskId = action.payload;
+      const targetTaskIndex = state.taskList.findIndex(
+        (task) => task._id === taskId,
+      );
+      cancelScheduledNotification(taskId);
+      state.taskList.splice(targetTaskIndex, 1);
+    },
     [getUserTasks.fulfilled]: (state, action) => {
       state.taskList = action.payload;
-      state.memoList = action.payload.map((task) => task.memo).flat();
     },
     [createMemo.fulfilled]: (state, action) => {
       const { memo, task } = action.payload;
+      const { _id } = task;
+      const targetTaskIndex = state.taskList.findIndex(
+        (task) => task._id === _id,
+      );
+      state.taskList[targetTaskIndex].memo.push(memo);
       const option = {
         identifier: task._id,
         body: memo.title,

@@ -15,7 +15,9 @@ export const userSignIn = createAsyncThunk(
         url: `${BASE_URL}/auth/signIn`,
         data: { idToken: payload },
       });
+
       await AsyncStorage.setItem("accessToken", data.accessToken);
+
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -28,7 +30,6 @@ export const fetchUserInfo = createAsyncThunk(
   async (payload, { rejectWithValue, getState, dispatch }) => {
     try {
       const headers = await getAccessToken();
-
       const { data } = await axios({
         method: "get",
         url: `${BASE_URL}/auth/user`,
@@ -36,6 +37,7 @@ export const fetchUserInfo = createAsyncThunk(
       });
 
       await AsyncStorage.setItem("accessToken", data.accessToken);
+
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data);
