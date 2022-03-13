@@ -4,23 +4,24 @@ import dayjs from "dayjs";
 import REPEATTYPE from "../../../commons/constants/REPEATTYPE";
 import COLORS from "../../../commons/constants/COLORS";
 import FONTS from "../../../commons/constants/FONTS";
+import { INFO } from "../../../commons/constants/MESSAGE";
 
 export default function MemoInfo({ memo }) {
   return (
     <View style={styles.memoContainer}>
-      <Text style={styles.title}>Title</Text>
+      <Text style={styles.title}>{INFO.TITLE}</Text>
       <Text style={styles.titleContainer}>{memo.title}</Text>
-      <Text style={styles.title}>Description</Text>
+      <Text style={styles.title}>{INFO.DESCRIPTION}</Text>
       <Text style={styles.descriptionContainer}>{memo.description}</Text>
-      <Text style={styles.title}>실행일</Text>
+      <Text style={styles.title}>{INFO.DID_DATE}</Text>
       <Text style={styles.notiContainer}>
         {dayjs(memo.did_date).format("YYYY-MM-DD HH:mm")}
       </Text>
-      <Text style={styles.title}>알림 예정일</Text>
+      <Text style={styles.title}>{INFO.DUE_DATE}</Text>
       <Text style={styles.notiContainer}>
         {dayjs(memo.due_date).format("YYYY-MM-DD HH:mm")}
       </Text>
-      <Text style={styles.title}>반복 여부</Text>
+      <Text style={styles.title}>{INFO.REPEAT}</Text>
       <Text style={styles.notiContainer}>{REPEATTYPE[memo.repeat]}</Text>
     </View>
   );

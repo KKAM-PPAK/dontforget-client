@@ -13,6 +13,7 @@ import MapHistoryList from "./component/MapHistoryList";
 import COLORS from "../../commons/constants/COLORS";
 import Loading from "../../components/Apploading/Loading";
 import FONTS from "../../commons/constants/FONTS";
+import { INFO } from "../../commons/constants/MESSAGE";
 
 export default function TimelineScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ export default function TimelineScreen({ navigation }) {
 
   useEffect(async () => {
     await dispatch(getTimeline());
-    await setIsLoading(false);
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -50,7 +51,7 @@ export default function TimelineScreen({ navigation }) {
       <Button
         buttonStyle={styles.button}
         textStyle={styles.buttonText}
-        title="현재 위치"
+        title={INFO.CURR_LOC}
         onPress={() => setShowCurrentMap(true)}
       />
       <CurrentMap

@@ -10,6 +10,13 @@ import ScheduleDate from "../../Task/component/ScheduleDate";
 import { createMemo } from "../../../redux/slices/taskSlices";
 import COLORS from "../../../commons/constants/COLORS";
 import FONTS from "../../../commons/constants/FONTS";
+import REPEATTYPE from "../../../commons/constants/REPEATTYPE";
+import {
+  BUTTON,
+  ERROR,
+  INFO,
+  MESSAGE,
+} from "../../../commons/constants/MESSAGE";
 
 export default function AddMemo({ visible, setVisible, task }) {
   const navigation = useNavigation();
@@ -22,24 +29,24 @@ export default function AddMemo({ visible, setVisible, task }) {
 
   async function handleAddMemoButton() {
     if (dayjs(didDate) > dayjs()) {
-      Alert.alert("Error!", "실행일을 지금 이전으로 지정해주세요");
+      Alert.alert(ERROR.ERROR, ERROR.DID_DATE_ERROR);
 
       return;
     }
 
     if (dayjs(dueDate) < dayjs()) {
-      Alert.alert("Error!", "오늘 이후로 알림일을 설정해주세요.");
+      Alert.alert(ERROR.ERROR, ERROR.DUE_DATE_ERROR);
 
       return;
     }
 
-    Alert.alert("깜빡!", "새로운 메모를 생성하시나요?", [
+    Alert.alert("깜빡!", MESSAGE.CREATE_NEW_MEMO, [
       {
-        text: "아니오",
+        text: MESSAGE.NO,
         style: "cancel",
       },
       {
-        text: "네",
+        text: MESSAGE.YES,
         onPress: () => {
           sendMemo();
           navigation.navigate("Tasks");
@@ -73,14 +80,14 @@ export default function AddMemo({ visible, setVisible, task }) {
       <View style={styles.memoBackground}>
         <View style={styles.createMemo}>
           <InputText
-            title="title"
+            title={INFO.TITLE}
             inputStyle={styles.titleContainer}
             multiline={false}
             item={title}
             onChangeText={setTitle}
           />
           <InputText
-            title="description"
+            title={INFO.DESCRIPTION}
             inputStyle={styles.descriptionContainer}
             multiline
             item={description}
@@ -95,15 +102,15 @@ export default function AddMemo({ visible, setVisible, task }) {
               setSelectedOption(itemValue)
             }
           >
-            <Picker.Item label="안 함" value="0" />
-            <Picker.Item label="매 일" value="1" />
-            <Picker.Item label="매 주" value="2" />
-            <Picker.Item label="매 년" value="3" />
+            <Picker.Item label={REPEATTYPE[0]} value="0" />
+            <Picker.Item label={REPEATTYPE[1]} value="1" />
+            <Picker.Item label={REPEATTYPE[2]} value="2" />
+            <Picker.Item label={REPEATTYPE[3]} value="3" />
           </Picker>
           <Button
             buttonStyle={styles.button}
             textStyle={styles.buttonText}
-            title="생성하기"
+            title={BUTTON.CREATE}
             onPress={handleAddMemoButton}
           />
         </View>

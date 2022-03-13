@@ -4,12 +4,15 @@ import { View, StyleSheet, Text, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import FONTS from "../../commons/constants/FONTS";
 import COLORS from "../../commons/constants/COLORS";
 import Button from "../../components/Button/Button";
 import { getUserTasks } from "../../redux/slices/taskSlices";
 import MyCalendar from "./component/MyCalendar";
 import MemoList from "../Memo/component/MemoList";
+import { MESSAGE } from "../../commons/constants/MESSAGE";
+import getTimelineDistance from "../../commons/utils/distance";
 
 const { width, height } = Dimensions.get("window");
 
@@ -21,9 +24,7 @@ export default function CalendarScreen({ navigation }) {
   const taskList = useSelector((state) => state.task.taskList);
 
   useEffect(() => {
-    (async () => {
-      dispatch(getUserTasks());
-    })();
+    dispatch(getUserTasks());
   }, []);
 
   useEffect(() => {
@@ -54,7 +55,7 @@ export default function CalendarScreen({ navigation }) {
         {onDateClick ? (
           <MemoList date={clickedDate} />
         ) : (
-          <Text style={styles.font}> 달력을 클릭하여 일정을 확인하세요 </Text>
+          <Text style={styles.font}>{MESSAGE.CLICK_DATE}</Text>
         )}
       </View>
       <View style={styles.buttonContainer}>

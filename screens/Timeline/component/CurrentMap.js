@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCurrentPostiion } from "../../../commons/utils/location";
 import { addLocations } from "../../../redux/slices/timeLineSlices";
 import Button from "../../../components/Button/Button";
+import COLORS from "../../../commons/constants/COLORS";
+import { BUTTON } from "../../../commons/constants/MESSAGE";
 
 export default function CurrentMap({ isOpen, setIsOpen, history }) {
   const dispatch = useDispatch();
@@ -44,7 +46,12 @@ export default function CurrentMap({ isOpen, setIsOpen, history }) {
             strokeWidth={5}
           />
         </MapView>
-        <Button title="close" onPress={() => setIsOpen(false)} />
+        <Button
+          buttonStyle={styles.button}
+          textStyle={styles.buttonText}
+          title={BUTTON.CLOSE}
+          onPress={() => setIsOpen(false)}
+        />
       </View>
     </Modal>
   );
@@ -60,5 +67,18 @@ const styles = StyleSheet.create({
     flex: 0.9,
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
+  },
+  button: {
+    width: 100,
+    height: 30,
+    paddingVertical: 5,
+    borderRadius: 10,
+    elevation: 3,
+    backgroundColor: COLORS.blue,
+  },
+  buttonText: {
+    fontWeight: "bold",
+    textAlign: "center",
+    textAlignVertical: "center",
   },
 });

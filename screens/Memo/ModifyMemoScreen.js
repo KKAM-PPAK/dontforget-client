@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Alert, Dimensions, StyleSheet, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
 import COLORS from "../../commons/constants/COLORS";
+import { BUTTON, ERROR, INFO, MESSAGE } from "../../commons/constants/MESSAGE";
 import REAPEATTYPE from "../../commons/constants/REPEATTYPE";
 import Button from "../../components/Button/Button";
 import InputText from "../../components/Input/InputText";
@@ -30,18 +31,18 @@ export default function ModifyMemoScreen({ navigation, route }) {
 
   async function handleAddMemoButton() {
     if (!isPastMemo && dayjs(dueDate) < dayjs()) {
-      Alert.alert("Error!", "오늘 이후로 알림일을 설정해주세요.");
+      Alert.alert(ERROR.ERROR, ERROR.DUE_DATE_ERROR);
 
       return;
     }
 
-    Alert.alert("깜빡!", "메모를 수정하시나요?", [
+    Alert.alert("깜빡!", MESSAGE.MODIFY_MEMO, [
       {
-        text: "아니오",
+        text: MESSAGE.NO,
         style: "cancel",
       },
       {
-        text: "네",
+        text: MESSAGE.YES,
         onPress: () => {
           sendMemo();
           navigation.navigate("Tasks");
@@ -92,29 +93,27 @@ export default function ModifyMemoScreen({ navigation, route }) {
                 setSelectedOption(itemValue)
               }
             >
-              <Picker.Item label="안 함" value="0" />
-              <Picker.Item label="매 일" value="1" />
-              <Picker.Item label="매 주" value="2" />
-              <Picker.Item label="매 년" value="3" />
+              <Picker.Item label={REAPEATTYPE[0]} value="0" />
+              <Picker.Item label={REAPEATTYPE[1]} value="1" />
+              <Picker.Item label={REAPEATTYPE[2]} value="2" />
+              <Picker.Item label={REAPEATTYPE[3]} value="3" />
             </Picker>
           </>
         ) : (
           <View>
-            <Text style={{ color: COLORS.orange }}>
-              오늘 이전의 작업은 예정일을 수정할 수 없습니다.
-            </Text>
-            <Text>알림 예정일</Text>
+            <Text style={{ color: COLORS.orange }}>{ERROR.CANNOT_CREATE}</Text>
+            <Text>{INFO.DUE_DATE}</Text>
             <Text style={styles.notiContainer}>
               {dayjs(memo.due_date).format("YYYY-MM-DD HH:mm")}
             </Text>
-            <Text>반복 여부</Text>
+            <Text>{INFO.REPEAT}</Text>
             <Text style={styles.notiContainer}>{REAPEATTYPE[memo.repeat]}</Text>
           </View>
         )}
         <Button
           buttonStyle={styles.button}
           textStyle={styles.buttonText}
-          title="수정하기"
+          title={BUTTON.MODIFY}
           onPress={handleAddMemoButton}
         />
       </View>

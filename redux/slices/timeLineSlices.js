@@ -4,6 +4,7 @@ import { BASE_URL_ANDROID_SIMULATOR } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import dayjs from "dayjs";
 import getAccessToken from "../../commons/utils/getAccessToken";
+import getTimelineDistance from "../../commons/utils/distance";
 
 const BASE_URL = BASE_URL_ANDROID_SIMULATOR;
 
@@ -28,13 +29,14 @@ export const addTimeline = createAsyncThunk(
     try {
       const yesterday = dayjs().subtract(1, "day").format("YYYY-MM-DD");
       const data = await AsyncStorage.getItem(yesterday);
+      const distance = getTimelineDistance(data);
 
       if (data) {
         const headers = await getAccessToken();
         await axios({
           method: "post",
           url: `${BASE_URL}/timeline/${yesterday}`,
-          data: { timeline: data },
+          data: { timeline: data, distance },
           headers,
         });
       }

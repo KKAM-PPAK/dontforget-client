@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BASE_URL_ANDROID_SIMULATOR } from "@env";
+import dayjs from "dayjs";
 import getAccessToken from "../../commons/utils/getAccessToken";
 import {
   cancelScheduledNotification,
@@ -73,15 +74,14 @@ export const createMemo = createAsyncThunk(
     try {
       const { memo, task } = payload;
       const headers = await getAccessToken();
-      await axios({
+      const { data } = await axios({
         method: "post",
         url: `${BASE_URL}/task/${task._id}/new`,
         data: { memo },
         headers,
       });
 
-      // dispatch(getUserTasks());
-
+      dispatch(getUserTasks());
       return { memo, task };
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -139,9 +139,8 @@ export const removeMemo = createAsyncThunk(
         url: `${BASE_URL}/task/${taskId}/${memoId}`,
         headers,
       });
-      dispatch(getUserTasks());
 
-      return taskId;
+      return payload;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -188,11 +187,6 @@ const taskSlices = createSlice({
     },
     [createMemo.fulfilled]: (state, action) => {
       const { memo, task } = action.payload;
-      const { _id } = task;
-      const targetTaskIndex = state.taskList.findIndex(
-        (task) => task._id === _id,
-      );
-      state.taskList[targetTaskIndex].memo.push(memo);
       const option = {
         identifier: task._id,
         body: memo.title,
@@ -204,26 +198,31 @@ const taskSlices = createSlice({
       triggerNotificationHandler(option);
     },
     [removeMemo.fulfilled]: (state, action) => {
-      const taskId = action.payload;
-
-      cancelScheduledNotification(taskId);
+      const { memoId, taskId } = action.payload;
+      const targetTaskIndex = state.taskList.findIndex(
+        (task) => task._id === taskId,
+      );
+      const memoIndex = state.taskList[targetTaskIndex].memo.findIndex(
+        (memo) => memo._id === memoId,
+      );
+      state.taskList[targetTaskIndex].memo.splice(memoIndex, 1);
+      if (memoIndex === state.taskList[targetTaskIndex].memo.length - 1) {
+        cancelScheduledNotification(taskId);
+      }
     },
     [updateMemo.fulfilled]: (state, action) => {
       const { memoInfo, taskId } = action.payload;
-      const option = {
-        identifier: taskId,
-        body: memoInfo.memo.title,
-        date: memoInfo.memo.due_date,
-        repeatType: memoInfo.memo.repeat || "0",
-        channelId: "task",
-      };
+      if (dayjs(memoInfo.memo.due_date) > dayjs()) {
+        const option = {
+          identifier: taskId,
+          body: memoInfo.memo.title,
+          date: memoInfo.memo.due_date,
+          repeatType: memoInfo.memo.repeat || "0",
+          channelId: "task",
+        };
 
-      triggerNotificationHandler(option);
-    },
-    [deleteTask.fulfilled]: (state, action) => {
-      const identifier = action.payload;
-
-      cancelScheduledNotification(identifier);
+        triggerNotificationHandler(option);
+      }
     },
   },
 });

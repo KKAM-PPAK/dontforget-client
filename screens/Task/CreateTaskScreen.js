@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View, Alert, StyleSheet, Dimensions } from "react-native";
 import { useDispatch } from "react-redux";
 import { Picker } from "@react-native-picker/picker";
@@ -9,6 +9,8 @@ import ScheduleDate from "./component/ScheduleDate";
 import InputText from "../../components/Input/InputText";
 import COLORS from "../../commons/constants/COLORS";
 import Button from "../../components/Button/Button";
+import { BUTTON, ERROR, INFO, MESSAGE } from "../../commons/constants/MESSAGE";
+import REPEATTYPE from "../../commons/constants/REPEATTYPE";
 
 export default function CreateTaskScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -21,30 +23,30 @@ export default function CreateTaskScreen({ navigation }) {
 
   async function saveTask() {
     if (dayjs(didDate) > dayjs()) {
-      Alert.alert("Error!", "실행일을 지금 이전으로 지정해주세요");
+      Alert.alert(ERROR.ERROR, ERROR.DID_DATE_ERROR);
 
       return;
     }
 
     if (dayjs(dueDate) < dayjs()) {
-      Alert.alert("Error!", "오늘 이후로 알림일을 설정해주세요.");
+      Alert.alert(ERROR.ERROR, ERROR.DUE_DATE_ERROR);
 
       return;
     }
 
     if (!memoTitle || !description || !taskTitle) {
-      Alert.alert("Error!", "할 일의 제목과 메모를 모두 채워주세요");
+      Alert.alert(ERROR.ERROR, ERROR.INFO_ERROR);
 
       return;
     }
 
-    Alert.alert("깜빡!", "새로운 일을 생성하시나요?", [
+    Alert.alert("깜빡!", MESSAGE.CREATE_NEW_MEMO, [
       {
-        text: "아니오",
+        text: MESSAGE.NO,
         style: "cancel",
       },
       {
-        text: "네",
+        text: MESSAGE.YES,
         onPress: () => {
           sendTask();
           navigation.navigate("Tasks");
@@ -72,21 +74,21 @@ export default function CreateTaskScreen({ navigation }) {
     <View style={styles.screen}>
       <View style={styles.createTask}>
         <InputText
-          title="Task Title"
+          title={`Task ${INFO.TITLE}`}
           inputStyle={styles.titleContainer}
           multiline={false}
           item={taskTitle}
           onChangeText={setTaskTitle}
         />
         <InputText
-          title="Memo Title"
+          title={`Memo ${INFO.TITLE}`}
           inputStyle={styles.titleContainer}
           multiline={false}
           item={memoTitle}
           onChangeText={setMemoTitle}
         />
         <InputText
-          title="description"
+          title={INFO.DESCRIPTION}
           inputStyle={styles.descriptionContainer}
           multiline
           item={description}
@@ -99,15 +101,15 @@ export default function CreateTaskScreen({ navigation }) {
           selectedValue={selectedOption}
           onValueChange={(itemValue, itemIndex) => setSelectedOption(itemValue)}
         >
-          <Picker.Item label="안 함" value="0" />
-          <Picker.Item label="매 일" value="1" />
-          <Picker.Item label="매 주" value="2" />
-          <Picker.Item label="매 년" value="3" />
+          <Picker.Item label={REPEATTYPE[0]} value="0" />
+          <Picker.Item label={REPEATTYPE[1]} value="1" />
+          <Picker.Item label={REPEATTYPE[2]} value="2" />
+          <Picker.Item label={REPEATTYPE[3]} value="3" />
         </Picker>
         <Button
           buttonStyle={styles.createButton}
           textStyle={styles.buttonText}
-          title="생성하기"
+          title={BUTTON.CREATE}
           onPress={saveTask}
         />
       </View>

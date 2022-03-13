@@ -13,36 +13,37 @@ import Button from "../../components/Button/Button";
 import { initUserInfo } from "../../redux/slices/userSlices";
 import COLORS from "../../commons/constants/COLORS";
 import FONTS from "../../commons/constants/FONTS";
+import { BUTTON, MESSAGE } from "../../commons/constants/MESSAGE";
 
 export default function OptionScreen() {
   const dispatch = useDispatch();
 
   async function handleLogoutButton() {
-    Alert.alert("깜빡!", "로그아웃 하시겠습니까?", [
+    Alert.alert("깜빡!", MESSAGE.LOGOUT, [
       {
-        text: "네",
+        text: MESSAGE.YES,
         onPress: async () => {
           await AsyncStorage.removeItem("accessToken");
           await dispatch(initUserInfo());
         },
       },
       {
-        text: "아니오",
+        text: MESSAGE.NO,
         style: "cancel",
       },
     ]);
   }
 
   async function handleNotificationButton() {
-    Alert.alert("깜빡!", "기기 설정 페이지로 이동합니다.", [
+    Alert.alert("깜빡!", MESSAGE.GO_DEVICE_SETTING, [
       {
-        text: "네",
+        text: MESSAGE.YES,
         onPress: () => {
           Linking.openSettings();
         },
       },
       {
-        text: "아니오",
+        text: MESSAGE.NO,
         style: "cancel",
       },
     ]);
@@ -57,13 +58,13 @@ export default function OptionScreen() {
         <Button
           buttonStyle={styles.button}
           textStyle={styles.buttonText}
-          title="LogOut"
+          title={BUTTON.LOGOUT}
           onPress={handleLogoutButton}
         />
         <Button
           buttonStyle={styles.button}
           textStyle={styles.buttonText}
-          title="Notification & Location"
+          title={BUTTON.NOTI_LOCA}
           onPress={handleNotificationButton}
         />
       </View>

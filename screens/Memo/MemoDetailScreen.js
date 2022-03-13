@@ -1,20 +1,21 @@
 import React from "react";
-import { Alert, Dimensions, StyleSheet, Text, View } from "react-native";
+import { Alert, Dimensions, StyleSheet, View } from "react-native";
 import { useDispatch } from "react-redux";
 import Button from "../../components/Button/Button";
 import MemoInfo from "./component/MemoInfo";
 import { removeMemo } from "../../redux/slices/taskSlices";
 import COLORS from "../../commons/constants/COLORS";
 import FONTS from "../../commons/constants/FONTS";
+import { BUTTON, MESSAGE } from "../../commons/constants/MESSAGE";
 
 export default function MemoDetailScreen({ route, navigation }) {
   const dispatch = useDispatch();
   const { memo, task } = route.params;
 
   function handleDeleteMemoButton() {
-    Alert.alert("깜빡!", "메모를 삭제하시겠습니까?", [
+    Alert.alert("깜빡!", MESSAGE.DELETE_MEMO, [
       {
-        text: "네",
+        text: MESSAGE.YES,
         onPress: () => {
           const memoId = memo._id;
           const taskId = task._id;
@@ -24,7 +25,7 @@ export default function MemoDetailScreen({ route, navigation }) {
         },
       },
       {
-        text: "아니오",
+        text: MESSAGE.NO,
         style: "cancel",
       },
     ]);
@@ -35,13 +36,13 @@ export default function MemoDetailScreen({ route, navigation }) {
       <Button
         buttonStyle={styles.button}
         textStyle={styles.buttonText}
-        title="memo 수정"
+        title={BUTTON.MODIFY}
         onPress={() => navigation.navigate("ModifyMemo", { memo, task })}
       />
       <Button
         buttonStyle={styles.deleteButton}
         textStyle={styles.buttonText}
-        title="삭제"
+        title={BUTTON.DELETE}
         onPress={handleDeleteMemoButton}
       />
     </View>
