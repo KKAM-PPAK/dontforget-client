@@ -1,25 +1,7 @@
 # ⏰깜빡!
 <img src="https://user-images.githubusercontent.com/73685676/158061917-ccef9500-41d6-4630-a212-e3a8e219174c.jpg" width="500px" height="500px" >
-깜빡! 은 내가 오늘 이전에 했던 일들을 기록하고 모아볼 수 있는 모바일 앱입니다. 
 
-![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
-![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-![Expo](https://img.shields.io/badge/expo-1C1E24?style=for-the-badge&logo=expo&logoColor=#D04A37)
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
-![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white)
-
-![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
-![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
-![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
-
-![Adobe After Effects](https://img.shields.io/badge/Adobe%20After%20Effects-9999FF.svg?style=for-the-badge&logo=Adobe%20After%20Effects&logoColor=white)
-![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
-![Mocha](https://img.shields.io/badge/-mocha-%238D6748?style=for-the-badge&logo=mocha&logoColor=white)
-![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
-![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
-
+**깜빡! 은 내가 오늘 이전에 했던 일들을 기록하고 모아볼 수 있는 모바일 앱입니다.** 
 
 ## 🤔깜빡!을 만들게 된 이유
 하루 하루 정신없이 살던 중에 잠시 방을 둘러보다보니 공기청정기가 눈에 들어왔습니다. 
@@ -66,6 +48,10 @@
 - react-test-render
 
 ## 🔧프로젝트 설명
+### Apploading
+
+- Splash Screen이 애플리케이션이 로딩 될 동안 보여집니다.
+
 ### Login
 
 - Google Oauth2과 JWT를 통한 소셜 로그인을 구현했습니다.
@@ -114,6 +100,9 @@
 ### 작업 기간
 2022.02.21 - 2022.02.27
 - 아이디어 구성 및 mockup, schema 작성
+[Kanban](https://www.notion.so/f8b1d626ef44430f97204364597d4375?v=d952a520995743a3b9367aff6cc22790)
+[Figma](https://www.figma.com/file/TJdSjIP5eln1fnvHcvk4WB/Noti?node-id=0%3A1)
+[Schema](https://www.notion.so/DB-schema-modeling-b7522db30f314dd980fe4a80ab89291e)
 
 2022.02.28 - 2022.03.12
 - 개발 진행
@@ -133,13 +122,26 @@
 
 하지만 React Native를 사용해보며 **내가 모바일 앱에서 이렇게 쓰던 게 사실은 이렇게 구현된 것이구나!** 하고 발견하게 되고 적용 해보는 재미가 있었습니다. 다음에 개인적으로 앱 개발에 도전해본다면 Expo를 벗어나 react native 로 조금 더 단단한 앱 개발에 도전해보고 싶다는 소망을 갖게 되었습니다.
 
-### 2. Location, Notification
+### 2. Location Permission & Notification
 
-Timeline 페이지를 구성하는 데에 있어 유저의 현재 위치를 받아오는 것이 필요했습니다. Foreground에 있을 때는 물론, 하루 이동한 거리를 polyline으로 표현해야 하기 때문에 Background 에서도 동작해야 했습니다. Notification도 마찬가지였습니다.
+Timeline 페이지를 구성하는 데에 있어 유저의 현재 위치를 받아오는 것이 필요했습니다. Foreground에 있을 때는 물론, 하루 이동한 거리를 polyline으로 표현해야 하기 때문에 Background 에서도 동작해야 했습니다. Notification또한 마찬가지였습니다.
 
 그러나 Expo 기반으로 작동할 때와 실제 안드로이드 디바이스에서 작동할 때의 결과물이 매우 달랐습니다. 이는 비단 Location, Notification 관련 뿐만 아니라 Expo 기반의 React Native 개발 전반에서 자주 보이는 모습이었습니다.  
 
 Expo에서 작동하지 않는다면 수정을 통해 해결할 수 있었지만 Expo와 실제 디바이스에서의 결과물이 달라 처음에는 많이 힘들었던 기억이 있습니다. Location 및 Notification 관련 작업을 진행하며 Expo의 제약을 체감했었습니다.
+
+### 3. Lottie.js
+목표한 기술 구현에 집중하다보니 항상 보이는 부분에 소홀해지는 경향이 있어 이번에는 보여지는 부분을 조금 더 신경쓰고 싶은 생각이 있었습니다. 
+Expo CLI 환경에서는 Animation에 대한 제약사항이 많았기 때문에 Splash Screen이 뜨는 앱 로딩 화면에 원하는 애니메이션을 주고 싶어 고민하던 중 발견한 툴이 Lottie.js였습니다.
+
+<div>
+<img src="https://user-images.githubusercontent.com/73685676/158065159-66f9e786-adb9-4fc6-8409-df1d93668026.png" width="500px" >
+<img src="https://user-images.githubusercontent.com/73685676/158065332-a261a705-fcdc-478b-8e22-86f315cd4e2c.gif" width="300px" >
+</div>
+
+이전에 영상 관련 일을 했었기 때문에 Adobe After Effect로 직접 조절할 수 있다는 점이 매력적으로 다가왔고, 쉬운 적용법과 나의 애니메이션을 Expo, React-Native는 물론 웹이나 다른 플랫폼에도 모두 사용가능하여 만약 다양한 플랫폼을 개발하게 된다면 모두 유사한 사용자 경험을 제공할 수 있다는 점이 마음에 들어 채택하게 되었습니다.
+
+그러나 기억나지 않는 After Effect 사용법, 프로젝트 말미에 시도하게 되어 상대적으로 시간이 부족하였고, Android Device에서는 Adobe Extension으로 추출한 .json 파일의 움직임이 구현한 샘플과 동일하게 나오지 않는 점 등이 어려움으로 다가왔습니다.
 
 ## 🙇‍♀️소감
 이번 개인 프로젝트를 진행하며 저는 코드 정리정돈에 조금 더 집중하고 싶었습니다. 기술을 구현하느라 허겁지겁 작성한 코드가 아닌 정리정돈 된 코드를 작성하는 것이 목표였는데 React Native로 첫 개발을 진행하며 예상치 못한 챌린지들이 많이 있어 시간이 부족했었습니다. 정해진 시간 안에 먼저 기술 구현이 완료되어야 한다는 생각에 기술 구현에 최대한 집중하게 되어 굉장히 아쉽습니다. 
