@@ -8,6 +8,7 @@ import Memo from "../Memo/component/Memo";
 import { deleteTask } from "../../redux/slices/taskSlices";
 import COLORS from "../../commons/constants/COLORS";
 import FONTS from "../../commons/constants/FONTS";
+import { BUTTON, ERROR, MESSAGE } from "../../commons/constants/MESSAGE";
 
 export default function TaskDetailScreen({ route }) {
   const navigation = useNavigation();
@@ -17,16 +18,16 @@ export default function TaskDetailScreen({ route }) {
   const latestMemo = task.memo[task.memo.length - 1];
 
   function handleDeleteTaskButton() {
-    Alert.alert("깜빡", "태스크를 삭제하시겠습니까?", [
+    Alert.alert("깜빡", MESSAGE.DELETE_TASK, [
       {
-        text: "네",
+        text: MESSAGE.YES,
         onPress: () => {
           dispatch(deleteTask(task._id));
           navigation.goBack();
         },
       },
       {
-        text: "아니오",
+        text: MESSAGE.NO,
         style: "cancel",
       },
     ]);
@@ -44,7 +45,7 @@ export default function TaskDetailScreen({ route }) {
           />
         ) : (
           <View style={styles.messageContainer}>
-            <Text style={styles.message}>메모 없음</Text>
+            <Text style={styles.message}>{MESSAGE.EMPTY_MEMO}</Text>
           </View>
         )}
       </View>
@@ -53,22 +54,22 @@ export default function TaskDetailScreen({ route }) {
           <Button
             buttonStyle={styles.button}
             textStyle={styles.buttonText}
-            title="메모 추가"
+            title={BUTTON.CREATE}
             onPress={() => setShowAddMemo(true)}
           />
         ) : (
-          <Text style={styles.message}>예정된 메모가 존재합니다</Text>
+          <Text style={styles.message}>{ERROR.MEMO_EXIST}</Text>
         )}
         <Button
           buttonStyle={styles.button}
           textStyle={styles.buttonText}
-          title="태스크 수정"
+          title={BUTTON.MODIFY}
           onPress={() => navigation.navigate("ModifyTask", { task })}
         />
         <Button
           buttonStyle={styles.deleteButton}
           textStyle={styles.buttonText}
-          title="태스크 삭제"
+          title={BUTTON.DELETE}
           onPress={handleDeleteTaskButton}
         />
       </View>

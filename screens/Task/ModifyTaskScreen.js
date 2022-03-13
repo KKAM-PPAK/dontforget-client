@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Alert, Dimensions, StyleSheet, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
 import COLORS from "../../commons/constants/COLORS";
+import { BUTTON, INFO, MESSAGE } from "../../commons/constants/MESSAGE";
 import Button from "../../components/Button/Button";
 import InputText from "../../components/Input/InputText";
 import { updateTask } from "../../redux/slices/taskSlices";
@@ -12,13 +13,13 @@ export default function ModifyTask({ route, navigation }) {
   const [taskTitle, setTaskTitle] = useState(task.title);
 
   async function saveTask() {
-    Alert.alert("깜빡!", "태스크 제목을 수정하시겠습니까?", [
+    Alert.alert("깜빡!", MESSAGE.MODIFY_TASK_TITLE, [
       {
-        text: "아니오",
+        text: MESSAGE.NO,
         style: "cancel",
       },
       {
-        text: "네",
+        text: MESSAGE.YES,
         onPress: () => {
           sendTask();
           navigation.navigate("Tasks");
@@ -40,7 +41,7 @@ export default function ModifyTask({ route, navigation }) {
     <View style={styles.modalContainer}>
       <View style={styles.modal}>
         <InputText
-          title="Task Title"
+          title={`Task ${INFO.TITLE}`}
           inputStyle={styles.titleContainer}
           multiline={false}
           item={taskTitle}
@@ -49,7 +50,7 @@ export default function ModifyTask({ route, navigation }) {
         <Button
           buttonStyle={styles.button}
           textStyle={styles.buttonText}
-          title="update"
+          title={BUTTON.MODIFY}
           onPress={saveTask}
         />
       </View>

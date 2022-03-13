@@ -5,6 +5,7 @@ import MapHistory from "./MapHistory";
 import InputText from "../../../components/Input/InputText";
 import COLORS from "../../../commons/constants/COLORS";
 import FONTS from "../../../commons/constants/FONTS";
+import { INFO } from "../../../commons/constants/MESSAGE";
 
 export default function MapHistoryList() {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ export default function MapHistoryList() {
       <View style={styles.inputContainer}>
         <InputText
           inputStyle={styles.titleContainer}
-          title="search"
+          title={INFO.SEARCH}
           multiline={false}
           item={keyword}
           onChangeText={(text) => searchFilter(text)}
@@ -88,7 +89,6 @@ const styles = StyleSheet.create({
     borderColor: COLORS.blue,
   },
   timelineContainer: {
-    height: 500,
     alignItems: "center",
   },
 });

@@ -46,7 +46,9 @@ export default function App() {
       Font.loadAsync({
         "noto-regular": require("./assets/fonts/NotoSerifKR-Regular.otf"),
         "gowun-regular": require("./assets/fonts/GowunDodum-Regular.ttf"),
-      }).then(setFontLoaded(true));
+      });
+
+      setFontLoaded(true);
     }, 5000);
   }, []);
 

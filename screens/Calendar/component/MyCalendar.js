@@ -14,7 +14,7 @@ export default function MyCalendar({
   const taskExist = {
     key: "taskExist",
     color: COLORS.red,
-    selectedDotColor: "blue",
+    selectedDotColor: COLORS.blue,
   };
 
   function markingDate(scheduledDate) {
@@ -45,7 +45,7 @@ export default function MyCalendar({
         weekVerticalMargin: 5,
         todayTextColor: COLORS.red,
         calendarBackground: COLORS.white,
-        textSectionTitleColor: "black",
+        textSectionTitleColor: COLORS.black,
         monthTextColor: COLORS.navy,
         selectedDayBackgroundColor: COLORS.blue,
         "stylesheet.calendar.header": {

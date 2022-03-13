@@ -10,6 +10,7 @@ import {
 import MapView, { Polyline } from "react-native-maps";
 import COLORS from "../../../commons/constants/COLORS";
 import FONTS from "../../../commons/constants/FONTS";
+import { BUTTON } from "../../../commons/constants/MESSAGE";
 import Button from "../../../components/Button/Button";
 
 export default function MapHistory({ item }) {
@@ -37,6 +38,7 @@ export default function MapHistory({ item }) {
       >
         <View style={styles.modalBackground}>
           <View style={styles.mapview}>
+            <Text>이동한 거리 : {item.distance / 1000} km</Text>
             <MapView
               style={styles.map}
               initialRegion={initialRegion}
@@ -49,9 +51,9 @@ export default function MapHistory({ item }) {
               />
             </MapView>
             <Button
-              title="close"
               buttonStyle={styles.button}
               textStyle={styles.buttonText}
+              title={BUTTON.CLOSE}
               onPress={() => setIsOpen(false)}
             />
           </View>

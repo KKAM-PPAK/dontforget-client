@@ -6,6 +6,7 @@ import COLORS from "../../commons/constants/COLORS";
 import Button from "../../components/Button/Button";
 import Task from "./component/Task";
 import FONTS from "../../commons/constants/FONTS";
+import { INFO } from "../../commons/constants/MESSAGE";
 
 export default function TaskListScreen({ navigation }) {
   const taskList = useSelector((state) => state.task.taskList);
@@ -13,7 +14,7 @@ export default function TaskListScreen({ navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: "center" }}>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>할 일 목록</Text>
+        <Text style={styles.title}>{INFO.LIST_TODO}</Text>
       </View>
       <View style={styles.taskListContainer}>
         <View style={{ flex: 1 }}>

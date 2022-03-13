@@ -38,9 +38,9 @@ export async function getCurrentPostiion() {
 }
 
 export async function backgroundLocationUpdate() {
-  Location.startLocationUpdatesAsync("background-location-task", {
+  await Location.startLocationUpdatesAsync("background-location-task", {
     accuracy: Location.Accuracy.BestForNavigation,
-    timeInterval: 5 * 60000,
+    timeInterval: 5 * 60 * 1000,
     showsBackgroundLocationIndicator: true,
     foregroundService: {
       notificationTitle: "깜빡!",
@@ -84,7 +84,7 @@ export function backgroundTaskSetting() {
 
         const item = JSON.parse(locationBefore);
         item.push(backgroundLocation);
-
+        console.log("background tracking");
         await AsyncStorage.setItem(today, JSON.stringify(item));
       }
     }

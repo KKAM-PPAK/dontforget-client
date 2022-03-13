@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import COLORS from "../../../commons/constants/COLORS";
 import Button from "../../../components/Button/Button";
 import FONTS from "../../../commons/constants/FONTS";
+import { BUTTON, INFO } from "../../../commons/constants/MESSAGE";
 
 export default function ScheduleDate({ type, date, setDate }) {
   const [mode, setMode] = useState("date");
@@ -34,34 +35,34 @@ export default function ScheduleDate({ type, date, setDate }) {
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         {type === "due" ? (
           <Text style={styles.text}>
-            예정일 : {result && result.split(" ")[0]}
+            {INFO.DUE_DATE} : {result && result.split(" ")[0]}
           </Text>
         ) : (
           <Text style={styles.text}>
-            실행일 : {result && result.split(" ")[0]}
+            {INFO.DID_DATE} : {result && result.split(" ")[0]}
           </Text>
         )}
         <Button
           buttonStyle={styles.button}
           textStyle={styles.buttonText}
-          title="날짜 설정"
+          title={BUTTON.SET_DATE}
           onPress={() => showMode("date")}
         />
       </View>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         {type === "due" ? (
           <Text style={styles.text}>
-            예정 시간 : {result && result.split(" ")[1]}
+            {INFO.DUE_DATE} : {result && result.split(" ")[1]}
           </Text>
         ) : (
           <Text style={styles.text}>
-            실행 시간 : {result && result.split(" ")[1]}
+            {INFO.DID_DATE} : {result && result.split(" ")[1]}
           </Text>
         )}
         <Button
           buttonStyle={styles.button}
           textStyle={styles.buttonText}
-          title="시간 설정"
+          title={BUTTON.SET_TIME}
           onPress={() => showMode("time")}
         />
       </View>
