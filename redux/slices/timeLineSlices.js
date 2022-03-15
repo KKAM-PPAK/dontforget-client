@@ -9,7 +9,7 @@ import getTimelineDistance from "../../commons/utils/distance";
 const BASE_URL = BASE_URL_ANDROID_SIMULATOR;
 
 export const addLocations = createAsyncThunk(
-  "get/backgroundLocation",
+  "add backgroundLocation",
   async (payload, { rejectWithValue, getState, dispatch }) => {
     try {
       const today = dayjs().format("YYYY-MM-DD");
@@ -39,6 +39,8 @@ export const addTimeline = createAsyncThunk(
           data: { timeline: data, distance },
           headers,
         });
+      } else {
+        return;
       }
 
       return payload;

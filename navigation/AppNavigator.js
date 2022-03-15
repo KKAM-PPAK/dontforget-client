@@ -41,12 +41,11 @@ export default function AppNavigator() {
           const locationBefore = await AsyncStorage.getItem(today);
 
           if (!locationBefore) {
-            dispatch(addTimeline());
-
             const initLoc = [];
             initLoc.push(backgroundLocation);
-
             await AsyncStorage.setItem(today, JSON.stringify(initLoc));
+
+            await dispatch(addTimeline());
 
             return;
           }

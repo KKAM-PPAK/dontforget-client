@@ -159,7 +159,7 @@ const taskSlices = createSlice({
       state.taskList.push(newTask);
       const option = {
         identifier: newTask._id,
-        body: newTask.memo[0].title,
+        body: newTask.title,
         date: newTask.memo[0].due_date,
         repeatType: newTask.memo[0].repeat,
         channelId: "task",
@@ -189,7 +189,7 @@ const taskSlices = createSlice({
       const { memo, task } = action.payload;
       const option = {
         identifier: task._id,
-        body: memo.title,
+        body: task.title,
         date: memo.due_date,
         repeatType: memo.repeat || "0",
         channelId: "task",
@@ -212,10 +212,15 @@ const taskSlices = createSlice({
     },
     [updateMemo.fulfilled]: (state, action) => {
       const { memoInfo, taskId } = action.payload;
+      const targetTaskIndex = state.taskList.findIndex(
+        (task) => task._id === taskId,
+      );
+      const taskTitle = state.taskList[targetTaskIndex].title;
+
       if (dayjs(memoInfo.memo.due_date) > dayjs()) {
         const option = {
           identifier: taskId,
-          body: memoInfo.memo.title,
+          body: taskTitle,
           date: memoInfo.memo.due_date,
           repeatType: memoInfo.memo.repeat || "0",
           channelId: "task",
