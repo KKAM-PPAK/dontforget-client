@@ -55,7 +55,12 @@ export async function triggerNotificationHandler(option) {
   let trigger;
   switch (repeatType) {
     case "0": {
-      const difference = setTimeToSecond(date) - setTimeToSecond(new Date());
+      break;
+    }
+    case "1": {
+      const difference =
+        dayjs(date).second(0).valueOf() -
+        dayjs().second(dayjs().second()).valueOf();
       trigger = {
         channelId,
         seconds: difference / 1000,
@@ -64,7 +69,7 @@ export async function triggerNotificationHandler(option) {
 
       break;
     }
-    case "1": {
+    case "2": {
       trigger = {
         channelId,
         hour: hour || date.hour,
@@ -74,7 +79,7 @@ export async function triggerNotificationHandler(option) {
 
       break;
     }
-    case "2": {
+    case "3": {
       trigger = {
         channelId,
         weekday,
@@ -84,7 +89,7 @@ export async function triggerNotificationHandler(option) {
       };
       break;
     }
-    case "3": {
+    case "4": {
       trigger = {
         channelId,
         month,
@@ -98,14 +103,16 @@ export async function triggerNotificationHandler(option) {
     default:
   }
 
-  await Notification.scheduleNotificationAsync({
-    identifier,
-    content: {
-      title: "깜빡!",
-      body: `${body} 할 시간입니다!`,
-    },
-    trigger,
-  });
+  if (repeatType !== "0") {
+    await Notification.scheduleNotificationAsync({
+      identifier,
+      content: {
+        title: "깜빡!",
+        body: `${body} 할 시간입니다!`,
+      },
+      trigger,
+    });
+  }
 }
 
 export function backgroundSubscription() {

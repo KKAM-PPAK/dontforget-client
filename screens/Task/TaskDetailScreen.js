@@ -100,8 +100,8 @@ const styles = StyleSheet.create({
   },
   messageContainer: {
     position: "absolute",
-    top: "40%",
-    left: "40%",
+    top: "45%",
+    left: "33%",
   },
   message: {
     fontFamily: FONTS.gowun,

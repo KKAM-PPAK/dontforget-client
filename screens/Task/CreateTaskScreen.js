@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Alert, StyleSheet, Dimensions } from "react-native";
+import { View, Alert, StyleSheet, Dimensions, Text } from "react-native";
 import { useDispatch } from "react-redux";
 import { Picker } from "@react-native-picker/picker";
 import dayjs from "dayjs";
@@ -19,7 +19,7 @@ export default function CreateTaskScreen({ navigation }) {
   const [taskTitle, setTaskTitle] = useState("");
   const [memoTitle, setMemoTitle] = useState();
   const [description, setDescription] = useState();
-  const [selectedOption, setSelectedOption] = useState();
+  const [selectedOption, setSelectedOption] = useState("0");
 
   async function saveTask() {
     if (dayjs(didDate) > dayjs()) {
@@ -28,7 +28,7 @@ export default function CreateTaskScreen({ navigation }) {
       return;
     }
 
-    if (dayjs(dueDate) < dayjs()) {
+    if (dayjs(dueDate) < dayjs() && selectedOption !== "0") {
       Alert.alert(ERROR.ERROR, ERROR.DUE_DATE_ERROR);
 
       return;
@@ -95,7 +95,6 @@ export default function CreateTaskScreen({ navigation }) {
           onChangeText={setDescription}
         />
         <ScheduleDate type="did" date={didDate} setDate={setDidDate} />
-        <ScheduleDate type="due" date={dueDate} setDate={setdueDate} />
         <Picker
           style={styles.picker}
           selectedValue={selectedOption}
@@ -105,7 +104,13 @@ export default function CreateTaskScreen({ navigation }) {
           <Picker.Item label={REPEATTYPE[1]} value="1" />
           <Picker.Item label={REPEATTYPE[2]} value="2" />
           <Picker.Item label={REPEATTYPE[3]} value="3" />
+          <Picker.Item label={REPEATTYPE[4]} value="4" />
         </Picker>
+        {selectedOption !== "0" ? (
+          <ScheduleDate type="due" date={dueDate} setDate={setdueDate} />
+        ) : (
+          <Text> 반복 설정을 켜면 알림일을 지정할 수 있습니다 </Text>
+        )}
         <Button
           buttonStyle={styles.createButton}
           textStyle={styles.buttonText}
@@ -157,7 +162,7 @@ const styles = StyleSheet.create({
   createButton: {
     height: "8%",
     borderRadius: 15,
-    marginVertical: 10,
+    // marginVertical: ,
     backgroundColor: COLORS.navy,
   },
   buttonText: {

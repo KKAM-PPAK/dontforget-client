@@ -64,7 +64,7 @@ export default function App() {
         identifier: "night",
         body: "오늘 기록해야 할 멋진 일이 있나요? 기록",
         date: { hour: 22, minute: 0 },
-        repeatType: "1",
+        repeatType: "2",
         channelId: "main",
       };
 

@@ -5,7 +5,7 @@ import { Alert, Dimensions, StyleSheet, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
 import COLORS from "../../commons/constants/COLORS";
 import { BUTTON, ERROR, INFO, MESSAGE } from "../../commons/constants/MESSAGE";
-import REAPEATTYPE from "../../commons/constants/REPEATTYPE";
+import REPEATTYPE from "../../commons/constants/REPEATTYPE";
 import Button from "../../components/Button/Button";
 import InputText from "../../components/Input/InputText";
 import { updateMemo } from "../../redux/slices/taskSlices";
@@ -24,13 +24,13 @@ export default function ModifyMemoScreen({ navigation, route }) {
   const [isPastMemo, setIsPastMemo] = useState(false);
 
   useEffect(() => {
-    if (dayjs() > dayjs(memo.due_date)) {
+    if (selectedOption !== "0" && dayjs() > dayjs(memo.due_date)) {
       setIsPastMemo(true);
     }
   }, []);
 
   async function handleAddMemoButton() {
-    if (!isPastMemo && dayjs(dueDate) < dayjs()) {
+    if (!isPastMemo && dayjs(dueDate) < dayjs() && selectedOption !== "0") {
       Alert.alert(ERROR.ERROR, ERROR.DUE_DATE_ERROR);
 
       return;
@@ -83,9 +83,13 @@ export default function ModifyMemoScreen({ navigation, route }) {
           onChangeText={setCurrentDescription}
         />
         <ScheduleDate type="did" date={didDate} setDate={setDidDate} />
-        {!isPastMemo ? (
+        {!isPastMemo && selectedOption !== "0" ? (
           <>
-            <ScheduleDate type="due" date={dueDate} setDate={setdueDate} />
+            {selectedOption !== "0" ? (
+              <ScheduleDate type="due" date={dueDate} setDate={setdueDate} />
+            ) : (
+              <Text> 반복 설정을 켜면 알림일을 지정할 수 있습니다 </Text>
+            )}
             <Picker
               style={styles.picker}
               selectedValue={selectedOption}
@@ -93,21 +97,26 @@ export default function ModifyMemoScreen({ navigation, route }) {
                 setSelectedOption(itemValue)
               }
             >
-              <Picker.Item label={REAPEATTYPE[0]} value="0" />
-              <Picker.Item label={REAPEATTYPE[1]} value="1" />
-              <Picker.Item label={REAPEATTYPE[2]} value="2" />
-              <Picker.Item label={REAPEATTYPE[3]} value="3" />
+              <Picker.Item label={REPEATTYPE[0]} value="0" />
+              <Picker.Item label={REPEATTYPE[1]} value="1" />
+              <Picker.Item label={REPEATTYPE[2]} value="2" />
+              <Picker.Item label={REPEATTYPE[3]} value="3" />
+              <Picker.Item label={REPEATTYPE[4]} value="4" />
             </Picker>
           </>
         ) : (
           <View>
             <Text style={{ color: COLORS.orange }}>{ERROR.CANNOT_CREATE}</Text>
             <Text>{INFO.DUE_DATE}</Text>
-            <Text style={styles.notiContainer}>
-              {dayjs(memo.due_date).format("YYYY-MM-DD HH:mm")}
-            </Text>
+            {memo.repeat === "0" ? (
+              <Text style={styles.notiContainer}>알림 없음</Text>
+            ) : (
+              <Text style={styles.notiContainer}>
+                {dayjs(memo.due_date).format("YYYY-MM-DD HH:mm")}
+              </Text>
+            )}
             <Text>{INFO.REPEAT}</Text>
-            <Text style={styles.notiContainer}>{REAPEATTYPE[memo.repeat]}</Text>
+            <Text style={styles.notiContainer}>{REPEATTYPE[memo.repeat]}</Text>
           </View>
         )}
         <Button

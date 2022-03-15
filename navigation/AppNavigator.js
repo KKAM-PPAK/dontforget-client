@@ -45,7 +45,7 @@ export default function AppNavigator() {
             initLoc.push(backgroundLocation);
             await AsyncStorage.setItem(today, JSON.stringify(initLoc));
 
-            await dispatch(addTimeline());
+            dispatch(addTimeline());
 
             return;
           }

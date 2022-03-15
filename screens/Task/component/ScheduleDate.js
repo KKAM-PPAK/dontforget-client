@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     borderRadius: 15,
     padding: 5,
-    marginBottom: 10,
+    marginVertical: 10,
     backgroundColor: COLORS.white,
     elevation: 3,
   },

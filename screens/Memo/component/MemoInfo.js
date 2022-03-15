@@ -18,9 +18,13 @@ export default function MemoInfo({ memo }) {
         {dayjs(memo.did_date).format("YYYY-MM-DD HH:mm")}
       </Text>
       <Text style={styles.title}>{INFO.DUE_DATE}</Text>
-      <Text style={styles.notiContainer}>
-        {dayjs(memo.due_date).format("YYYY-MM-DD HH:mm")}
-      </Text>
+      {memo.repeat !== "0" ? (
+        <Text style={styles.notiContainer}>
+          {dayjs(memo.due_date).format("YYYY-MM-DD HH:mm")}
+        </Text>
+      ) : (
+        <Text style={styles.notiContainer}>예정 없음</Text>
+      )}
       <Text style={styles.title}>{INFO.REPEAT}</Text>
       <Text style={styles.notiContainer}>{REPEATTYPE[memo.repeat]}</Text>
     </View>

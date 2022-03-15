@@ -1,7 +1,7 @@
 import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { Alert, Dimensions, Modal, StyleSheet, View } from "react-native";
+import { Alert, Dimensions, Modal, StyleSheet, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
 import dayjs from "dayjs";
 import Button from "../../../components/Button/Button";
@@ -25,7 +25,7 @@ export default function AddMemo({ visible, setVisible, task }) {
   const [didDate, setDidDate] = useState(new Date());
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
-  const [selectedOption, setSelectedOption] = useState();
+  const [selectedOption, setSelectedOption] = useState("0");
 
   async function handleAddMemoButton() {
     if (dayjs(didDate) > dayjs()) {
@@ -34,7 +34,7 @@ export default function AddMemo({ visible, setVisible, task }) {
       return;
     }
 
-    if (dayjs(dueDate) < dayjs()) {
+    if (dayjs(dueDate) < dayjs() && selectedOption !== "0") {
       Alert.alert(ERROR.ERROR, ERROR.DUE_DATE_ERROR);
 
       return;
@@ -94,7 +94,6 @@ export default function AddMemo({ visible, setVisible, task }) {
             onChangeText={setDescription}
           />
           <ScheduleDate type="did" date={didDate} setDate={setDidDate} />
-          <ScheduleDate type="due" date={dueDate} setDate={setdueDate} />
           <Picker
             style={styles.picker}
             selectedValue={selectedOption}
@@ -106,7 +105,13 @@ export default function AddMemo({ visible, setVisible, task }) {
             <Picker.Item label={REPEATTYPE[1]} value="1" />
             <Picker.Item label={REPEATTYPE[2]} value="2" />
             <Picker.Item label={REPEATTYPE[3]} value="3" />
+            <Picker.Item label={REPEATTYPE[4]} value="4" />
           </Picker>
+          {selectedOption !== "0" ? (
+            <ScheduleDate type="due" date={dueDate} setDate={setdueDate} />
+          ) : (
+            <Text> 반복 설정을 켜면 알림일을 지정할 수 있습니다 </Text>
+          )}
           <Button
             buttonStyle={styles.button}
             textStyle={styles.buttonText}

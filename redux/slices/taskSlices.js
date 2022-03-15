@@ -172,7 +172,20 @@ const taskSlices = createSlice({
       const targetTaskIndex = state.taskList.findIndex(
         (task) => task._id === taskId,
       );
+      const latestMemo =
+        state.taskList[targetTaskIndex].memo[
+          state.taskList[targetTaskIndex].memo.length - 1
+        ];
       state.taskList[targetTaskIndex].title = title;
+      const option = {
+        identifier: taskId,
+        body: title,
+        date: latestMemo.due_date,
+        repeatType: latestMemo.repeat || "0",
+        channelId: "task",
+      };
+
+      triggerNotificationHandler(option);
     },
     [deleteTask.fulfilled]: (state, action) => {
       const taskId = action.payload;
