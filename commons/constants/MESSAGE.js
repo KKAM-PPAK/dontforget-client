@@ -28,7 +28,7 @@ exports.INFO = {
   DID_DATE: "실행일",
   DID_TIME: "실행 시각",
   DUE_DATE: "예정일",
-  DID_TIME: "예정 시각",
+  DUE_TIME: "예정 시각",
   REPEAT: "반복 여부",
   SEARCH: "검색",
   CURR_LOC: "현재 위치",

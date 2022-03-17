@@ -110,7 +110,9 @@ export default function AddMemo({ visible, setVisible, task }) {
           {selectedOption !== "0" ? (
             <ScheduleDate type="due" date={dueDate} setDate={setdueDate} />
           ) : (
-            <Text> 반복 설정을 켜면 알림일을 지정할 수 있습니다 </Text>
+            <Text style={{ fontFamily: FONTS.gowun }}>
+              반복 설정을 켜면 알림일을 지정할 수 있습니다
+            </Text>
           )}
           <Button
             buttonStyle={styles.button}
