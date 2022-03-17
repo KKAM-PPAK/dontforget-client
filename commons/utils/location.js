@@ -39,7 +39,7 @@ export async function getCurrentPostiion() {
 
 export async function backgroundLocationUpdate() {
   await Location.startLocationUpdatesAsync("background-location-task", {
-    accuracy: Location.Accuracy.BestForNavigation,
+    accuracy: Location.Accuracy.High,
     timeInterval: 5 * 60 * 1000,
     showsBackgroundLocationIndicator: true,
     foregroundService: {

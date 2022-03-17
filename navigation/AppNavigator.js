@@ -28,7 +28,7 @@ export default function AppNavigator() {
     (async () => {
       await Location.watchPositionAsync(
         {
-          accuracy: Location.Accuracy.Balanced,
+          accuracy: Location.Accuracy.High,
           timeInterval: 6 * 10000,
         },
         async (location) => {

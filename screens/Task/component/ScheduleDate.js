@@ -52,11 +52,11 @@ export default function ScheduleDate({ type, date, setDate }) {
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         {type === "due" ? (
           <Text style={styles.text}>
-            {INFO.DUE_DATE} : {result && result.split(" ")[1]}
+            {INFO.DUE_TIME} : {result && result.split(" ")[1]}
           </Text>
         ) : (
           <Text style={styles.text}>
-            {INFO.DID_DATE} : {result && result.split(" ")[1]}
+            {INFO.DID_TIME} : {result && result.split(" ")[1]}
           </Text>
         )}
         <Button
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     borderRadius: 15,
     padding: 5,
-    marginVertical: 10,
+    marginBottom: 10,
     backgroundColor: COLORS.white,
     elevation: 3,
   },
