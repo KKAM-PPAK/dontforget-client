@@ -43,9 +43,6 @@
 ### General
 - Prettier + ESLint
 - AWS Elastic Beanstalk
-- jest
-- mocha
-- react-test-render
 
 ## .apk 파일 다운로드
 구글 앱 스토어 등록이 진행중입니다. 
@@ -54,15 +51,22 @@
 
 [GGam-PPak](https://drive.google.com/file/d/1dvIArgD1_uGitwld7husQJCqLuG2et6O/view?usp=sharing)
 ## 🔧프로젝트 설명
-### Apploading
+### Apploading 및 Login
+
+<div>
+    <img src="https://user-images.githubusercontent.com/73685676/161699598-0f3dfecf-e408-490f-93cd-20635e60504c.jpg" height="400px" >
+    <img src="https://user-images.githubusercontent.com/73685676/161700379-af2b372c-3a25-4b3d-b86a-c8d5db17d0a5.jpg" height="400px" >
+</div>
 
 - Splash Screen이 애플리케이션이 로딩 될 동안 보여집니다.
-
-### Login
-
 - Google Oauth2과 JWT를 통한 소셜 로그인을 구현했습니다.
 
 ### Tasks
+<div>
+  <img src="https://user-images.githubusercontent.com/73685676/161700579-0144bc70-727a-4cc8-bdcd-71a3595ad051.jpg" height="400px" >
+  <img src="https://user-images.githubusercontent.com/73685676/161700684-bb872cb3-b4b7-4b6f-96a9-1aaab90df665.jpg" height="400px" >
+  <img src="https://user-images.githubusercontent.com/73685676/161701853-5b482f61-5211-4997-b318-d761769b0ec9.jpg" height="400px" >
+</div>
 
 - 해야할 일의 큰 단위를 task 라고 지칭합니다. 
 ( ex. 병원 1회차, 2회차 .... ⇒ `병원 방문` 이 하나의 task 입니다)
@@ -77,6 +81,16 @@
 - 실행일은 이 일을 실행한 일, 예정일은 다음 예정일을 입력합니다.
 
 ### Memo
+<div>
+  <img src="https://user-images.githubusercontent.com/73685676/161701605-bb1e325a-cffa-4fe1-ae53-43e8a250cfc2.jpg" height="400px" >
+  <img src="https://user-images.githubusercontent.com/73685676/161700940-9ee1d258-6490-4516-a38b-5ff1e029b441.jpg" height="400px" >
+  <img src="https://user-images.githubusercontent.com/73685676/161702530-6a1ddf8e-fba3-449c-b86a-93dac1ef48c8.jpg" height="300px" >
+</div>
+<div>
+  <img src="https://user-images.githubusercontent.com/73685676/161701208-bec3878b-ae9c-40fd-8796-1e6b10a9e854.jpg" height="400px" >
+  <img src="https://user-images.githubusercontent.com/73685676/161701216-5b226f77-be34-47b8-b2d5-630a19e32d12.jpg" height="400px" >
+  <img src="https://user-images.githubusercontent.com/73685676/161701202-136b3176-5b01-4eca-b471-ca11ee54d1e1.jpg" height="300px" >
+</div>
 
 - task에 속한 큰 단위의 일에 대해 언제 무엇을 했는지 기록하고 알림을 지정할 수 있습니다.
 - 지정한 예정시간이 되면 상단 바에 알림이 뜨게 됩니다.
@@ -86,18 +100,28 @@
 수정 가능합니다.
 
 ### Calendar
+<div>
+  <img src="https://user-images.githubusercontent.com/73685676/161702005-8ad3f36a-1ff8-48ff-831f-86943327e080.jpg" height="400px" >
+</div>
 
 - 로그인하면 가장 먼저 보이는 메인 화면이자 달력과 함께 작성한 메모들이 해당 요일에 보입니다.
 - 작성해 둔 메모를 통해 특정 날짜에 내가 무엇을 했는지를 한 눈에 볼 수 있습니다.
 - 하단의 `+` 버튼을 누르면 새로운 Task와 1개의 memo를 생성할 수 있습니다.
 
 ### Timeline
+<div>
+  <img src="https://user-images.githubusercontent.com/73685676/161702133-d5a053aa-9611-4c81-88d1-c13e977582e0.jpg" height="400px" >
+  <img src="https://user-images.githubusercontent.com/73685676/161702140-adf8fb89-3597-4d4d-85ca-be839333e90b.jpg" height="400px" >
+</div>
 
 - 사용자가 위치 정보 이용에 동의하게 되면 하루 이동기록을 볼 수 있습니다.
 - 이동 기록은 삭제할 수 없습니다.
 - 지난 날짜들의 이동기록 외에 오늘 지금까지 이동한 거리를 polyline으로 볼 수 있습니다.
 
 ### ETC
+<div>
+  <img src="https://user-images.githubusercontent.com/73685676/161703102-c9606b6d-d7e5-4e78-ba7e-3782750bf5e3.jpg" height="400px" >
+</div>
 
 - 옵션 페이지에서 로그아웃을 하거나 알림 / 위치 권한을 조작할 수 있습니다.
 - 매일 저녁 10시에 기록해야할 것이 있는 지 묻는 알림을 보냅니다.
@@ -141,8 +165,8 @@ Expo에서 작동하지 않는다면 수정을 통해 해결할 수 있었지만
 Expo CLI 환경에서는 Animation에 대한 제약사항이 많았기 때문에 Splash Screen이 뜨는 앱 로딩 화면에 원하는 애니메이션을 주고 싶어 고민하던 중 발견한 툴이 Lottie.js였습니다.
 
 <div>
-<img src="https://user-images.githubusercontent.com/73685676/158065159-66f9e786-adb9-4fc6-8409-df1d93668026.png" width="500px" >
-<img src="https://user-images.githubusercontent.com/73685676/158065332-a261a705-fcdc-478b-8e22-86f315cd4e2c.gif" width="300px" >
+  <img src="https://user-images.githubusercontent.com/73685676/158065159-66f9e786-adb9-4fc6-8409-df1d93668026.png" width="500px" >
+  <img src="https://user-images.githubusercontent.com/73685676/158065332-a261a705-fcdc-478b-8e22-86f315cd4e2c.gif" width="300px" >
 </div>
 
 이전에 영상 관련 일을 했었기 때문에 Adobe After Effect로 직접 조절할 수 있다는 점이 매력적으로 다가왔고, 쉬운 적용법과 나의 애니메이션을 Expo, React-Native는 물론 웹이나 다른 플랫폼에도 모두 사용가능하여 만약 다양한 플랫폼을 개발하게 된다면 모두 유사한 사용자 경험을 제공할 수 있다는 점이 마음에 들어 채택하게 되었습니다.
@@ -156,10 +180,9 @@ Expo CLI 환경에서는 Animation에 대한 제약사항이 많았기 때문에
 
 그러나 내가 앞으로 직접 사용할 앱이라는 생각에 아쉬웠던 부분을 떠올리며 계속해서 기술을 추가해보고 유지 및 보수를 진행해보고 싶습니다. 
 
-분명 부트캠프를 시작할 때는 도움을 주시는 분들이 주변에 많이 있었습니다. 켄님을 비롯해 많은 멘토님들과 동기들이 같은 고민을 하고 어려운 부분은 같이 해결해 나갔었습니다. 덕분에 새로운 기술을
-무서워하지 않고 도전해볼 수 있었던 것 같습니다.
+분명 부트캠프를 시작할 때는 도움을 주시는 분들이 주변에 많이 있었습니다. 많은 멘토님들과 동기들이 같은 고민을 하고 어려운 부분은 함께 고민하여 해결해 나갔었습니다. 덕분에 새로운 기술을 무서워하지 않고 도전해볼 수 있었던 것 같습니다.
 
-그러나 개인 프로젝트는 켄님의 도움을 받아 온전히 저 혼자 해결해 나가야 했었습니다. 과연 내가 React도 아니고 처음 해보는 React Native로 스스로 개발할 수 있을까? 플랜을 짜고 개발을 진행하면서도 불안했던 것이 사실입니다.
+그러나 개인 프로젝트는 오롯이 저 혼자 해결해 나가야 했었습니다. 과연 내가 React도 아니고 처음 해보는 React Native로 스스로 개발할 수 있을까? 플랜을 짜고 개발을 진행하면서도 불안했던 것이 사실입니다.
 
 그러나 소감을 작성중인 지금 그래도 어떻게든 해냈구나 하는 안도감과 조금 더 빨리, 더 잘 할 수 있었을텐데 하는 아쉬움이 교차합니다. 
 
